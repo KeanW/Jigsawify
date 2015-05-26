@@ -59,10 +59,6 @@ app.use(function (req, res, next) {
 
 app.use('/', express.static(__dirname + '/html'));
 
-app.get('/', (function (req, res) {
-  res.sendFile(path.join(__dirname, '/html/', 'jigsite.html'));
-}));
-
 /////////////////////////////////////////////////////////////////////////////////
 //  Rest API
 //
