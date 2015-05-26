@@ -1,0 +1,23 @@
+{
+	"name": "Jigsawify",
+	"version": "0.1.0dev",
+	"private": true,
+	"author": "Kean Walmsley - Autodesk",
+	"description": "Node.js Server app for Jigsawify.com",
+	"contributors": [
+		{"name": "Kean Walmsley"}
+	],
+	"scripts": {
+		"predeploy": "echo Deploying Jigsawify",
+		"postdepoly": "echo Jigsawify Deployed"
+	},
+	"dependencies": {
+		"socket.io": "0.9.x",
+		"express": "4.x",
+		"morgan": "1.x",
+    "request": "*"
+	},
+	"engines": {
+		"node": "0.10.x"
+	}
+}
