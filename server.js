@@ -20,6 +20,7 @@ require('newrelic');
 var express = require('express');
 //var multer = require('multer');
 var morgan = require('morgan');
+var path = require('path');
 var api = require('./api');
 
 var app = express();
@@ -57,6 +58,10 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', express.static(__dirname + '/html'));
+
+app.get('/', (function (req, res) {
+  res.sendFile('/html/jigsite.html');
+}));
 
 /////////////////////////////////////////////////////////////////////////////////
 //  Rest API
