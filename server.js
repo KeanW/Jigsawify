@@ -16,7 +16,7 @@
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////////////////
 
-require('newrelic');
+//require('newrelic');
 var express = require('express');
 //var multer = require('multer');
 var morgan = require('morgan');
@@ -24,8 +24,6 @@ var path = require('path');
 var api = require('./api');
 
 var app = express();
-
-var done = false;
 
 app.use(morgan({ format: 'dev', immediate: true }));     
 
