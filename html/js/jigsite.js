@@ -43,10 +43,19 @@ function edgeDetector(){
     this.ctxDimensions.height = height;
   };
   
-  this.resetSize = function () {
+  this.resetSize = function (width, height) {
 
-    var width = this.imgElement.width;
-    var height = this.imgElement.height;
+    if (width && !height) {
+      height = width * (this.imgElement.height / this.imgElement.width);
+    }
+    else {
+      if (!width) {
+        width = this.imgElement.width;
+      }
+      if (!height) {
+        height = this.imgElement.height;
+      }
+    }
 
     this.rawCanvas.width = width;
     this.rawCanvas.height = height;
@@ -62,7 +71,7 @@ function edgeDetector(){
     this.coreLoop();
   };
   
-  this.generatePixelData = function (canvas) {
+  this.generatePixelData = function (canvas, width, height) {
 
     var created = false;
     if (canvas == null) {
@@ -70,10 +79,13 @@ function edgeDetector(){
       created = true;
     }
 
-    var ctx = canvas.getContext('2d'),
-        dataURL,
-        width = this.imgElement.width,
-        height = this.imgElement.height;
+    var ctx = canvas.getContext('2d');
+    if (!width) {
+      width = this.imgElement.width;
+    }
+    if (!height) {
+      height = this.imgElement.height;
+    }
     canvas.width = width;
     canvas.height = height;
 
@@ -81,16 +93,44 @@ function edgeDetector(){
       ctx.drawImage(this.imgElement, 0, 0, width, height);
     }
 
-    this.pixelData = ctx.getImageData(0, 0 , width, height);
+    var pixelData = ctx.getImageData(0, 0 , width, height);
 
     if (created) {
       canvas = null;
     }
+    
+    return pixelData;
   };
   
-  this.coreLoop = function(){
+  this.coreLoop = function() {
+
+    this.gatherPoints(this.pixelData, this.plotPoint);
+  };
+  
+  this.generatePoints = function(pixelData, width, height) {
+  	
+    var points = [];
+
+    this.gatherPoints(
+      pixelData,
+      function(obj,x,y) {
+        points.push({ x: x, y: y });
+      }
+    );
+    return ({
+      width: $('#width').val(),
+      height: $('#height').val(),
+      pieces: $('#pieces').val(),
+      xres: width,
+      yres: height,
+      pixels: points
+    });
+  }
+
+  this.gatherPoints = function(pixelData, func) {
     var x = 0;
     var y = 0;
+    var index = undefined;
 
     var pixel = undefined;
     var left = undefined;
@@ -98,43 +138,43 @@ function edgeDetector(){
     var right = undefined;
     var bottom = undefined;
 
-    var row = this.ctxDimensions.width * 4;
+    var row = pixelData.width * 4;
     var third = 0.333333;
 
-    for (y = 0; y < this.pixelData.height; y++) {
-      for(x = 0; x < this.pixelData.width; x++) {
+    for (y = 0; y < pixelData.height; y++) {
+      for(x = 0; x < pixelData.width; x++) {
 
-        // get this pixel's data
+        // Get this pixel's data
 
-        index = (x + y * this.ctxDimensions.width) * 4;
+        index = (x + y * pixelData.width) * 4;
         pixel =
-          (this.pixelData.data[index + 2]
-          + this.pixelData.data[index + 1]
-          + this.pixelData.data[index]) * third;
+          (pixelData.data[index + 2]
+          + pixelData.data[index + 1]
+          + pixelData.data[index]) * third;
 
         // Get the values of the surrounding pixels
         // Color data is stored [r,g,b,a][r,g,b,a]
         // in sequence.
 
         left =
-          (this.pixelData.data[index - 2]
-          + this.pixelData.data[index - 3]
-          + this.pixelData.data[index - 4]) * third;
+          (pixelData.data[index - 2]
+          + pixelData.data[index - 3]
+          + pixelData.data[index - 4]) * third;
 
         right =
-          (this.pixelData.data[index + 6]
-          + this.pixelData.data[index + 5]
-          + this.pixelData.data[index + 4]) * third;
+          (pixelData.data[index + 6]
+          + pixelData.data[index + 5]
+          + pixelData.data[index + 4]) * third;
 
         top =
-          (this.pixelData.data[index - row]
-          + this.pixelData.data[index + 1 - row]
-          + this.pixelData.data[index + 2 - row]) * third;
+          (pixelData.data[index - row]
+          + pixelData.data[index + 1 - row]
+          + pixelData.data[index + 2 - row]) * third;
 
         bottom =
-          (this.pixelData.data[index + row]
-           + this.pixelData.data[index + 1 + row]
-           + this.pixelData.data[index + 2 + row]) * third;
+          (pixelData.data[index + row]
+           + pixelData.data[index + 1 + row]
+           + pixelData.data[index + 2 + row]) * third;
 
         // Compare it all
 
@@ -148,19 +188,19 @@ function edgeDetector(){
           pixel > bottom + this.threshold ||
           pixel < bottom - this.threshold
         ) {
-          this.plotPoint(x,y);
+          func(this,x,y);
         }
       }
     }
-  };
+  }
   
-  this.plotPoint = function(x,y){
+  this.plotPoint = function(obj,x,y){
 
-    this.rawctx.beginPath();
-    this.rawctx.arc(x, y, 0.5, 0, 2 * Math.PI, false);
-    this.rawctx.fillStyle = 'black';
-    this.rawctx.fill();
-    this.rawctx.beginPath();
+    obj.rawctx.beginPath();
+    obj.rawctx.arc(x, y, 0.5, 0, 2 * Math.PI, false);
+    obj.rawctx.fillStyle = 'black';
+    obj.rawctx.fill();
+    obj.rawctx.beginPath();
   };
 
   this.process = function (elem, id) {
@@ -171,7 +211,7 @@ function edgeDetector(){
       id = "rawData";
     }
     this.init(elem, id);
-    this.generatePixelData();
+    this.pixelData = this.generatePixelData();
     this.findEdges();
   }
 
@@ -182,6 +222,18 @@ function edgeDetector(){
     );
     this.coreLoop();
   }
+
+  this.postData = function() {
+    
+    var width = 200,
+        height = calcDim(200, false);
+    var pixData = this.generatePixelData(null, width, height);
+    var pts = this.generatePoints(pixData, width, height),
+        ps = JSON.stringify(pts),
+        url = 'data:text/json;charset=utf8,' + encodeURIComponent(ps);
+    window.open(url, '_blank');
+    window.focus();
+  }  
 }
 
 var edgeDetector = new edgeDetector();
@@ -190,19 +242,20 @@ function round2(n) {
   return Math.round(n * 100) / 100;
 }
 
-function setWidth(val) {
+function calcDim(val, getWidth) {
   var aspect =
     edgeDetector.imgElement.width /
     edgeDetector.imgElement.height;
+  return getWidth ? val * aspect : val / aspect;
+}
+
+function setWidth(val) {
   $('#width').val(round2(val));
-  $('#height').val(round2(val / aspect));
+  $('#height').val(round2(calcDim(val, false)));
 }
 
 function setHeight(val) {
-  var aspect =
-    edgeDetector.imgElement.width /
-    edgeDetector.imgElement.height;
-  $('#width').val(round2(val * aspect));
+  $('#width').val(round2(calcDim(val, true)));
   $('#height').val(round2(val));
 }
 

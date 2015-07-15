@@ -1,6 +1,7 @@
 // http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
 
 var stage = 0;
+var pixelsWidth = 450;
 
 var stageText =
   [
@@ -17,6 +18,7 @@ function setStage(newStage) {
     // Going back
 
     if (stage == 1 && newStage == 0) {
+      $('#explanation').show();
       $('#droppedimage').hide();
       $('#dropbox').show();
       $('#nav').hide();
@@ -38,6 +40,8 @@ function setStage(newStage) {
       $('#engravedimage').show();
       $('#size').show();
       $('#instruction').show();
+      $('#droppedimage')[0].style.width = ((pixelsWidth * 2) + 10) + "px";
+      $('#engravedimage')[0].style.width = pixelsWidth + "px";
       stage = newStage;
     }
   }
@@ -46,6 +50,7 @@ function setStage(newStage) {
     // Going forward
 
     if (stage == 0 && newStage == 1) {
+      $('#explanation').hide();
       $('.errormessages').empty();
       $('.media-drop-placeholder > *').hide();
       $('.media-drop-placeholder').toggleClass(
@@ -59,6 +64,8 @@ function setStage(newStage) {
       $('#threshold').hide();
       $('#content')[0].style.width = "640px";
       $('#engravedimage').show();
+      $('#droppedimage')[0].style.width = ((pixelsWidth * 2) + 10) + "px";
+      $('#engravedimage')[0].style.width = pixelsWidth + "px";
       $('#size').show();
       //edgeDetector.generatePixelData();
       //edgeDetector.findEdges();
@@ -76,6 +83,18 @@ function setStage(newStage) {
       $('#size').hide();
       $('#instruction').hide();
       stage = newStage;
+      
+      var width = 200,
+          height = calcDim(200, false);
+      var pixData = edgeDetector.generatePixelData(null, width, height);
+      var pts = edgeDetector.generatePoints(pixData, width, height);
+    
+      $.get(
+        window.location.origin + '/api/submit?' + $.param(pts),
+        function (res) {
+          alert(res);
+        }
+      );
     }
   }
   $('#instruction')[0].innerHTML = stageText[stage];
@@ -98,7 +117,7 @@ $(document).ready(function () {
 
     postUrl: 'upload.php',
     imageUrl: 'image.php',
-    maxLength: '450',
+    maxLength: pixelsWidth,
 
     /**
      * File dropped / selected.
@@ -129,11 +148,11 @@ $(document).ready(function () {
 
           var oldHeight = newImg.height;
           var oldWidth = newImg.width;
-          newImg.width = 450;
-          newImg.height = 450 * (oldHeight / oldWidth);
+          newImg.width = pixelsWidth;
+          newImg.height = pixelsWidth * (oldHeight / oldWidth);
 
           edgeDetector.resetSize();
-          edgeDetector.generatePixelData();
+          edgeDetector.pixelData = edgeDetector.generatePixelData();
           edgeDetector.findEdges();
         }
         newImg.src = url;

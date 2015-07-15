@@ -15,7 +15,8 @@
 		"socket.io": "0.9.x",
 		"express": "4.x",
 		"morgan": "1.x",
-    "request": "*"
+    	"multer": "~0.1.6",
+		"request": "*"
 	},
 	"engines": {
 		"node": "0.10.x"

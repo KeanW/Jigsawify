@@ -9,8 +9,8 @@
   </head>
   <body>
     <h2>Jigsawify</h2>
-    <div id="explanation">
-      <p>Build a one-of-a-kind jigsaw puzzle!</p>
+    <div>
+      <p id="explanation">Build a one-of-a-kind jigsaw puzzle!</p>
       <p id="instruction">1. Choose your favorite picture</p>
     </div>
 
@@ -42,6 +42,7 @@
       <input id="width" type="number" class="num" /> x <input id="height" type="number" class="num" /> <select><option value="inches">inches</option><option value="cm">cm</option></select><br/>
       <br/>
       <input id="pieces" type="number" class="num" /> pieces
+      <button id="doit" type="button" class="btn" onclick="edgeDetector.postData();">Do It</button>
     </div>
     <br />
     <br />

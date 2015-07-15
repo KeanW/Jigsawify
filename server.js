@@ -18,32 +18,33 @@
 
 //require('newrelic');
 var express = require('express');
-//var multer = require('multer');
+var multer = require('multer');
 var morgan = require('morgan');
 var path = require('path');
 var api = require('./api');
 
 var app = express();
 
-app.use(morgan({ format: 'dev', immediate: true }));     
+app.use(morgan('dev', { immediate: true }));     
 
-/*Configure the multer.*/
+/* Configure the multer */
 
-/*
+var done = false;
+
 app.use(multer({
   dest: './uploads/',
   rename: function (fieldname, filename) {
     return filename + Date.now();
   },
   onFileUploadStart: function (file) {
-    console.log(file.originalname + ' is starting ...')
+    console.log(file.originalname + ' is starting ...');
+    done = false;
   },
   onFileUploadComplete: function (file) {
     console.log(file.fieldname + ' uploaded to  ' + file.path)
     done = true;
   }
 }));
-*/
 
 /////////////////////////////////////////////////////////////////////////////////
 //  Webpages server
@@ -63,14 +64,14 @@ app.use('/', express.static(__dirname + '/html'));
 /////////////////////////////////////////////////////////////////////////////////
 app.get('/api/token', api.getToken);
 
-/*
-app.post('/api/photo', function (req, res) {
-  if (done == true) {
+app.get('/api/submit', api.submitData);
+
+app.post('/api/upload', function (req, res) {
+  if (done) {
     console.log(req.files);
     res.end("File uploaded.");
   }
 });
-*/
 
 /////////////////////////////////////////////////////////////////////////////////
 //  
