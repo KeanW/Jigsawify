@@ -5,10 +5,8 @@ function edgeDetector(){
   this.imgElement = undefined;
   this.rawCanvas = undefined;
   this.rawctx = undefined;
-  this.ctxDimensions = {
-    width: undefined,
-    height:undefined
-  };
+  this.width = undefined;
+  this.height = undefined;
   this.pixelData = undefined;
   this.threshold = 30;
   
@@ -33,27 +31,29 @@ function edgeDetector(){
         "\"></canvas>").insertAfter(after);
   
       this.rawCanvas = $("#" + id)[0];
+    } else {
+      this.rawCanvas.width = width;
+      this.rawCanvas.height = height;
     }
-    
     this.rawctx = this.rawCanvas.getContext('2d');
-
+    
     // Store the canvas size
 
-    this.ctxDimensions.width = width;
-    this.ctxDimensions.height = height;
+    this.width = width;
+    this.height = height;
   };
   
   this.resetSize = function (width, height) {
 
     if (width && !height) {
-      height = width * (this.imgElement.height / this.imgElement.width);
+      height = width * (this.height / this.width);
     }
     else {
       if (!width) {
-        width = this.imgElement.width;
+        width = this.width;
       }
       if (!height) {
-        height = this.imgElement.height;
+        height = this.height;
       }
     }
 
@@ -62,15 +62,10 @@ function edgeDetector(){
 
     // Store the canvas size
 
-    this.ctxDimensions.width = width;
-    this.ctxDimensions.height = height;
+    this.width = width;
+    this.height = height;
   };
 
-  this.findEdges = function () {
-    //this.generatePixelData();
-    this.coreLoop();
-  };
-  
   this.generatePixelData = function (canvas, width, height) {
 
     var created = false;
@@ -81,10 +76,10 @@ function edgeDetector(){
 
     var ctx = canvas.getContext('2d');
     if (!width) {
-      width = this.imgElement.width;
+      width = this.width;
     }
     if (!height) {
-      height = this.imgElement.height;
+      height = this.height;
     }
     canvas.width = width;
     canvas.height = height;
@@ -102,7 +97,7 @@ function edgeDetector(){
     return pixelData;
   };
   
-  this.coreLoop = function() {
+  this.findEdges = function() {
 
     this.gatherPoints(this.pixelData, this.plotPoint);
   };
@@ -216,13 +211,13 @@ function edgeDetector(){
   }
 
   this.update = function(val) {
+
     this.threshold = val;
-    this.rawctx.clearRect(
-      0, 0, this.ctxDimensions.width, this.ctxDimensions.height
-    );
-    this.coreLoop();
+    this.rawctx.clearRect(0, 0, this.width, this.height);
+    this.findEdges();
   }
 
+  /*
   this.postData = function() {
     
     var width = 200,
@@ -233,44 +228,6 @@ function edgeDetector(){
         url = 'data:text/json;charset=utf8,' + encodeURIComponent(ps);
     window.open(url, '_blank');
     window.focus();
-  }  
+  }
+  */
 }
-
-var edgeDetector = new edgeDetector();
-
-function round2(n) {
-  return Math.round(n * 100) / 100;
-}
-
-function calcDim(val, getWidth) {
-  var aspect =
-    edgeDetector.imgElement.width /
-    edgeDetector.imgElement.height;
-  return getWidth ? val * aspect : val / aspect;
-}
-
-function setWidth(val) {
-  $('#width').val(round2(val));
-  $('#height').val(round2(calcDim(val, false)));
-}
-
-function setHeight(val) {
-  $('#width').val(round2(calcDim(val, true)));
-  $('#height').val(round2(val));
-}
-
-function setPieces(val) {
-  $('#pieces').val(val);
-}
-
-$(document).ready(function(){
-  
-  // Run when the threshold changes
-
-  //$('#threshold').change(function () {
-  //  edgeDetector.update($(this).val());
-  //});
-  
-  $('#width').change(function () { setWidth($(this).val()); } );
-  $('#height').change(function () { setHeight($(this).val()); } );
-});

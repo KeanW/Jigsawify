@@ -116,7 +116,7 @@
                 var blob = convertCanvasToBlob(canvas);
 
                 // Upload to server.
-                //realUploadImage(blob);
+                realUploadImage(blob);
             };
 
             var success = false;
@@ -176,6 +176,7 @@
             var w = Math.round(originalWidth / scaleRatio);
             var h = Math.round(originalHeight / scaleRatio);
 
+            var ocanvas = document.createElement("canvas");
             var canvas = document.createElement("canvas");
 
             // Bepaal de breedte an hoogte, gebaseerd op orientatie.
@@ -186,22 +187,33 @@
                 case 8:
                     canvas.width = scaleHeight;
                     canvas.height = scaleWidth;
+                    ocanvas.width = originalHeight;
+                    ocanvas.height = originalWidth;
                     break;
                 default:
                     canvas.width = scaleWidth;
                     canvas.height = scaleHeight;
+                    ocanvas.width = originalWidth;
+                    ocanvas.height = originalHeight;
             }
 
             var ctx = canvas.getContext("2d");
+            var octx = ocanvas.getContext("2d");
+            
             if (orientation) {
                 // Transform canvas coordination according to specified frame size and orientation.
                 transformCoordinate(ctx, orientation, scaleWidth, scaleHeight);
+                transformCoordinate(octx, orientation, originalWidth, originalHeight);
             }
 
             // For now just a white background, in the future possibly background color based on dominating image color?
             ctx.fillStyle = "rgba(255,255,255, 0)";
             ctx.fillRect(0, 0, scaleWidth, scaleHeight);
             ctx.drawImage(img, x, y, w, h);
+
+            octx.fillStyle = "rgba(255,255,255, 0)";
+            octx.fillRect(0, 0, originalWidth, originalHeight);
+            octx.drawImage(img, 0, 0, originalWidth, originalHeight);
 
             // Try to fix IOS6s image squash bug.
             // Test for transparency. This trick only works with JPEGs.
@@ -211,13 +223,14 @@
                 if (transparent) {
                     // Redraw image, doubling the height seems to fix the iOS6 issue.
                     ctx.drawImage(img, x, y, w, h * 2.041);
+                    octx.drawImage(img, 0, 0, originalWidth, originalHeight * 2.041);
                 }
             }
 
             // Notify listeners of scaled and cropped image.
             settings.onProcessed && settings.onProcessed(canvas);
 
-            return canvas;
+            return ocanvas;
         }
 
         /**
@@ -305,21 +318,22 @@
          * @param blob Image as blob
          */
         function realUploadImage(blob) {
+            
             // Start upload.
-            var xmlHttpRequest = new XMLHttpRequest();
+            var xhr = new XMLHttpRequest();
 
             // Send image as binary file using HTTP PUT.
-            xmlHttpRequest.open("PUT", settings.postUrl, true /* async */);
+            xhr.open("POST", settings.postUrl, true /* async */);
             var requestTimer = setTimeout(function () {
 
                 // Timeout uploading.
-                xmlHttpRequest.abort();
+                xhr.abort();
                 settings.onUploaded && settings.onUploaded(false);
 
             }, MAXIMUM_WAITING_TIME);
 
             // Send progress notifications, 0...100%.
-            xmlHttpRequest.upload.onprogress = function (evt) {
+            xhr.upload.onprogress = function (evt) {
                 if (evt.lengthComputable && settings.onUploadProgress) {
                     var percentComplete = Math.round((evt.loaded / evt.total) * 100);
                     settings.onUploadProgress(percentComplete);
@@ -327,7 +341,7 @@
             };
 
             // On error or success notifications.
-            xmlHttpRequest.onreadystatechange = function () {
+            xhr.onreadystatechange = function () {
                 // in case of network errors this might not give reliable results
                 if (this.readyState == this.DONE) {
 
@@ -335,14 +349,17 @@
                     clearTimeout(requestTimer);
 
                     if (settings.onUploaded) {
-                        var success = (xmlHttpRequest.status == 200);
+                        var success = (xhr.status == 200);
                         settings.onUploaded(success, this.responseText)
                     }
                 }
             };
 
-            // Start daadwerkelijke versturen.
-            xmlHttpRequest.send(blob);
+            var formData = new FormData();
+            formData.append("operation", "addMessage");
+            formData.append("msg", blob);
+            
+            xhr.send(formData);
         }
 
         /**
