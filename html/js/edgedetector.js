@@ -5,46 +5,37 @@ function edgeDetector(){
   this.imgElement = undefined;
   this.rawCanvas = undefined;
   this.rawctx = undefined;
+  this.outCanvas = undefined;
   this.width = undefined;
   this.height = undefined;
   this.pixelData = undefined;
   this.threshold = 30;
   
-  this.init = function (elem, id, after) {
+  this.init = function (img, canvas, outcanvas, width, height) {
 
-    this.imgElement = elem;
+    this.imgElement = img;
 
-    var width = this.imgElement.width;
-    var height = this.imgElement.height;
+    // Set the canvases
 
-    // Build the canvas
-    
-    if (after == null) {
-      after = elem;
-    }
-
-    this.rawCanvas = $("#" + id)[0];
-    if (this.rawCanvas == null) {
-      
-      $("<canvas id=\"" + id + "\" width=\"" + width +
-        "\" height=\"" + height +
-        "\"></canvas>").insertAfter(after);
-  
-      this.rawCanvas = $("#" + id)[0];
-    } else {
-      this.rawCanvas.width = width;
-      this.rawCanvas.height = height;
-    }
-    this.rawctx = this.rawCanvas.getContext('2d');
+    this.rawCanvas = canvas;    
+    this.rawctx = canvas.getContext('2d');
+    this.outCanvas = outcanvas;
     
     // Store the canvas size
 
-    this.width = width;
-    this.height = height;
+    this.width = (!width ? img.width : width);
+    this.height = (!height ? img.height : height);
+    
+    // Generate the base pixel data
+    
+    this.pixelData = this.generatePixelData(width, height);
   };
   
   this.resetSize = function (width, height) {
 
+    if (!this.rawCanvas)
+      return;
+      
     if (width && !height) {
       height = width * (this.height / this.width);
     }
@@ -66,34 +57,24 @@ function edgeDetector(){
     this.height = height;
   };
 
-  this.generatePixelData = function (canvas, width, height) {
+  this.generatePixelData = function (width, height) {
 
-    var created = false;
-    if (canvas == null) {
-      canvas = document.createElement('canvas');
-      created = true;
-    }
-
-    var ctx = canvas.getContext('2d');
-    if (!width) {
+    if (!this.imgElement)
+      return null;
+      
+    if (!width)
       width = this.width;
-    }
-    if (!height) {
+    
+    if (!height)
       height = this.height;
-    }
-    canvas.width = width;
-    canvas.height = height;
 
-    if (created) {
-      ctx.drawImage(this.imgElement, 0, 0, width, height);
-    }
-
+    this.outCanvas.width = width;
+    this.outCanvas.height = height;
+    var ctx = this.outCanvas.getContext("2d");    
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(this.imgElement, 0, 0, width, height);
     var pixelData = ctx.getImageData(0, 0 , width, height);
 
-    if (created) {
-      canvas = null;
-    }
-    
     return pixelData;
   };
   
@@ -102,27 +83,38 @@ function edgeDetector(){
     this.gatherPoints(this.pixelData, this.plotPoint);
   };
   
-  this.generatePoints = function(pixelData, width, height) {
+  this.generatePoints = function(width, height, args) {
   	
+    if (!this.pixelData)
+      return [];
+     
     var points = [];
 
     this.gatherPoints(
-      pixelData,
+      this.pixelData,
       function(obj,x,y) {
         points.push({ x: x, y: y });
       }
     );
+    args = args || {};    
+    args.XRes = width;
+    args.YRes = height;
+    args.Pixels = points;
+    return args;
+    /*
     return ({
-      width: $('#width').val(),
-      height: $('#height').val(),
-      pieces: $('#pieces').val(),
       xres: width,
       yres: height,
       pixels: points
     });
+    */
   }
 
   this.gatherPoints = function(pixelData, func) {
+    
+    if (!pixelData)
+      return;
+
     var x = 0;
     var y = 0;
     var index = undefined;
@@ -190,7 +182,7 @@ function edgeDetector(){
   }
   
   this.plotPoint = function(obj,x,y){
-
+    
     obj.rawctx.beginPath();
     obj.rawctx.arc(x, y, 0.5, 0, 2 * Math.PI, false);
     obj.rawctx.fillStyle = 'black';
@@ -198,14 +190,9 @@ function edgeDetector(){
     obj.rawctx.beginPath();
   };
 
-  this.process = function (elem, id) {
-    if (elem == null) {
-      elem = $('#image')[0];
-    }
-    if (id == null) {
-      id = "rawData";
-    }
-    this.init(elem, id);
+  this.process = function (elem, canvas, outcanvas) {
+    
+    this.init(elem, canvas, outcanvas);
     this.pixelData = this.generatePixelData();
     this.findEdges();
   }
@@ -222,7 +209,7 @@ function edgeDetector(){
     
     var width = 200,
         height = calcDim(200, false);
-    var pixData = this.generatePixelData(null, width, height);
+    var pixData = this.generatePixelData(width, height);
     var pts = this.generatePoints(pixData, width, height),
         ps = JSON.stringify(pts),
         url = 'data:text/json;charset=utf8,' + encodeURIComponent(ps);

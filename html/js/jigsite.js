@@ -35,11 +35,41 @@ var stages =
     []                // Stage 3 - ?
   ];
 
-// Initiallize all the elements to be considered on
+// Initialize all the elements to be considered on
 
 var on = [];
 for (var i = 0; i < elements.length; i++) {
   on.push(true); // All elements initially on
+}
+
+function buildCanvas(img, id, after) {
+
+    var canvas = undefined;
+    if (id) {
+      canvas = $("#" + id)[0];
+      if (!canvas) {
+        
+        if (!after) {
+          after = img;
+        }
+        
+        $("<canvas id=\"" + id + "\" width=\"" + img.width +
+          "\" height=\"" + img.height +
+          "\"></canvas>").insertAfter(after);
+    
+        canvas = $("#" + id)[0];
+      } else {
+        canvas.width = img.width;
+        canvas.height = img.height;
+      }
+    } else {
+      // Create a canvas using other means 
+      
+      canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+    }    
+    return canvas;
 }
 
 function setStage(newStage) {
@@ -49,7 +79,7 @@ function setStage(newStage) {
   if (newStage == 0) {
     $('#content')[0].style.width = "640px";
     
-    // Clear the engraved image
+    // Clear the engraved image, reset the slider
     
     var canvas = $("#rawData2")[0];
     if (canvas) {
@@ -61,7 +91,10 @@ function setStage(newStage) {
   if (newStage == 1) {
     $('#content')[0].style.width = "100%";
     setTimeout(function(){
-      edgeDetector.init($('#image')[0], "rawData", $('#engimage')[0]);
+      var img = $('#image')[0];
+      var canvas = buildCanvas(img, "rawData");
+      var outcanvas = buildCanvas(img);
+      edgeDetector.init(img, canvas, outcanvas);
       edgeDetector.update(edgeDetector.threshold);
     }, 0);
   }
@@ -69,7 +102,10 @@ function setStage(newStage) {
   if (newStage == 2) {
     $('#content')[0].style.width = "640px";
     setTimeout(function(){
-      edgeDetector.init($('#image')[0], "rawData2", $('#engimage')[0]);
+      var img = $('#image')[0];
+      var canvas = buildCanvas(img, "rawData2", $('#engimage')[0]);
+      var outcanvas = buildCanvas(img);
+      edgeDetector.init(img, canvas, outcanvas);
       edgeDetector.update(edgeDetector.threshold);
       setWidth(12);
       setPieces(1000);
@@ -117,19 +153,9 @@ function process() {
     threshold: $('#threshold').val(),
     upload: uploadedBlob
   }
-  /*
-  alert(
-    "Pieces: " + args.pieces +
-    ", width: " + args.width +
-    ", height: " + args.height +
-    ", units: " + args.units +
-    ", threshold: " + args.threshold +
-    ", upload: " + args.upload
-  );
-  */
   
   $.get(
-    window.location.origin + '/api/submit' + $.param(args),
+    window.location.origin + '/api/submit?' + $.param(args),
     function(req, res) {
       if (res === "success") {  
           if (req !== "") {
@@ -179,9 +205,8 @@ $(document).ready(function () {
     imageUrl: 'image',
     maxLength: pixelsWidth,
 
-    /**
-     * File dropped / selected.
-     */
+    // File dropped / selected
+     
     onDropped: function (success) {
       if (!success) {
         $('.errormessages').text(
@@ -190,9 +215,8 @@ $(document).ready(function () {
       }
     },
 
-    /**
-     * Image cropped and scaled.
-     */
+    // Image cropped and scaled
+
     onProcessed: function (canvas) {
       if (canvas) {
 
@@ -226,8 +250,6 @@ $(document).ready(function () {
         $('.media-drop-placeholder').toggleClass(
           'busyloading', false).css('cursor', 'auto');
 
-        edgeDetector.process();
-        
       } else {
 
         window.alert(
@@ -237,26 +259,19 @@ $(document).ready(function () {
       }
     },
 
-    /**
-     * Image uploaded.
-     *
-     * @param success boolean True indicates success
-     * @param responseText String Raw server response
-     */
+    // Image uploaded
+
     onUploaded: function (success, responseText) {
       if (success) {
-        window.alert('Image uploaded successfully: ' + responseText);
+        //window.alert('Image uploaded successfully: ' + responseText);
         uploadedBlob = responseText;
       } else {
         window.alert('Image upload failed: ' + responseText);
       }
     },
 
-    /**
-     * Progress during upload.
-     *
-     * @param progress Number Progress percentage
-     */
+    // Progress during upload
+
     onUploadProgress: function (progress) {
       window.console && console.log('Upload progress: ' + progress);
     }

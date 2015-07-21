@@ -18,11 +18,11 @@ app.use(multer({
     return filename + Date.now();
   },
   onFileUploadStart: function (file) {
-    console.log(file.originalname + ' is starting ...');
+    //console.log(file.originalname + ' is starting ...');
     done = false;
   },
   onFileUploadComplete: function (file) {
-    console.log(file.fieldname + ' uploaded to ' + file.path)
+    //console.log(file.fieldname + ' uploaded to ' + file.path)
     done = true;
   }
 }));
@@ -43,13 +43,13 @@ app.use('/', express.static(__dirname + '/html'));
 //  Rest API
 //
 /////////////////////////////////////////////////////////////////////////////////
-app.get('/api/token', api.getToken);
+//app.get('/api/token', api.getToken);
 
 app.get('/api/submit', api.submitData);
 
 app.post('/api/upload', function (req, res) {
   if (done) {
-    console.log(req.files);
+    console.log('File uploaded to ' + req.files.msg.path);
     res.end(req.files.msg.name);
   }
 });
