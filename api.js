@@ -195,7 +195,7 @@ exports.submitData = function (req, res) {
             var workItem = JSON.parse(body);
             
             if (!workItem.Id || !workItem.UserId) {
-              console.log('Problem with request: ' + body);
+              console.log('Problem with request:  ' + body);
               return;
             }
             
