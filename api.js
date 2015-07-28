@@ -120,8 +120,6 @@ exports.submitData = function (req, res) {
         var width = parseInt(args.res),
             height = Math.round(parseInt(args.height) * width / parseInt(args.width));
         
-        console.log("Width: " + width + " Height: " + height);
-        
         fs.readFile('./uploads/' + args.upload, function(err, blob){
           if (err) throw err;
           
@@ -183,8 +181,6 @@ exports.submitData = function (req, res) {
             ', of which ' + spts.length + ' is pt data)'
           );
           
-          console.log("PostData: " + postData);
-
           request.post({
             url: workItemsUrl,
             headers: headers,
