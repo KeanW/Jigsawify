@@ -122,184 +122,178 @@ exports.submitData = function (req, res) {
         
         console.log('Reading file: ' + args.upload);
 
-        fs.readFile('./uploads/' + args.upload, function(err, blob){
-          if (err) throw err;
-          
-          console.log("File is read: " + blob);
-          
-          console.log("Creating a " + width + " x " + height + " image.");
+        console.log("Creating a " + width + " x " + height + " image.");
 
-          var img = new Image(width, height);
-          img.onload = function() {
-            var raw = new Canvas(width, height);
-            var out = new Canvas(width, height);
-            
-            console.log('Initializing edge detector...');
+        var img = new Image(width, height);
+        img.onload = function() {
+          var raw = new Canvas(width, height);
+          var out = new Canvas(width, height);
+          
+          console.log('Initializing edge detector...');
 
-            var ed = new edge.EdgeDetector();
-            ed.init(img, raw, out, width, height, args.threshold);
-            var pts = ed.generatePoints(width, height, args2, true); // Compress by default
-            var spts = JSON.stringify(pts);
+          var ed = new edge.EdgeDetector();
+          ed.init(img, raw, out, width, height, args.threshold);
+          var pts = ed.generatePoints(width, height, args2, true); // Compress by default
+          var spts = JSON.stringify(pts);
+
+          console.log('Initializing work item data...');
+
+          var data = {
+            'odata.metadata': 'https://developer.api.autodesk.com/autocad.io/v1/$metadata#WorkItems/@Element',
+            Arguments: {
+              InputArguments: [
+                {
+                  Name: 'HostDwg',
+                  Resource: 'http://download.autodesk.com/us/support/files/autocad_2015_templates/acad.dwt',
+                  StorageProvider: 'Generic'
+                },
+                {
+                  Name: 'Params',
+                  ResourceKind: 'Embedded',
+                  Resource: 'data:application/json, ' + spts,
+                  StorageProvider: 'Generic'
+                }
+              ],
+              OutputArguments: [
+                {
+                  Name: 'Results',
+                  StorageProvider: 'Generic',
+                  HttpVerb: 'POST',
+                  ResourceKind: 'ZipPackage'
+                }
+              ]
+            },
+            UserId: '',
+            Id: '',
+            Version: 1,
+            ActivityId: {
+              Id: activityName,
+              UserId: userId
+            }
+          };
+          
+          var postData = JSON.stringify(data);
+          
+          var headers = {
+            Authorization: auth,
+            'Content-Type': 'application/json',
+            'Content-Length': postData.length,
+            Host: hostName
+          }
   
-            console.log('Initializing work item data...');
+          console.log(
+            'Creating work item (request length ' + postData.length +
+            ', of which ' + spts.length + ' is pt data)'
+          );
+          
+          request.post({
+            url: workItemsUrl,
+            headers: headers,
+            body: postData
+          },
+          function (error, response, body) {
 
-            var data = {
-              'odata.metadata': 'https://developer.api.autodesk.com/autocad.io/v1/$metadata#WorkItems/@Element',
-              Arguments: {
-                InputArguments: [
-                  {
-                    Name: 'HostDwg',
-                    Resource: 'http://download.autodesk.com/us/support/files/autocad_2015_templates/acad.dwt',
-                    StorageProvider: 'Generic'
-                  },
-                  {
-                    Name: 'Params',
-                    ResourceKind: 'Embedded',
-                    Resource: 'data:application/json, ' + spts,
-                    StorageProvider: 'Generic'
-                  }
-                ],
-                OutputArguments: [
-                  {
-                    Name: 'Results',
-                    StorageProvider: 'Generic',
-                    HttpVerb: 'POST',
-                    ResourceKind: 'ZipPackage'
-                  }
-                ]
-              },
-              UserId: '',
-              Id: '',
+            if (error) throw error;
+
+            // Extract the Id and UserId from the WorkItem
+            
+            var workItem = JSON.parse(body);
+            
+            if (!workItem.Id || !workItem.UserId) {
+              console.log('Problem with request:  ' + body);
+              return;
+            }
+            
+            console.log('Created work item (Id ' + workItem.Id + ' for user ' + workItem.UserId + ')');
+  
+            var data2 = {
+              UserId: workItem.UserId,
+              Id: workItem.Id,
               Version: 1,
               ActivityId: {
                 Id: activityName,
                 UserId: userId
               }
-            };
-            
-            var postData = JSON.stringify(data);
-            
-            var headers = {
-              Authorization: auth,
-              'Content-Type': 'application/json',
-              'Content-Length': postData.length,
-              Host: hostName
             }
-    
-            console.log(
-              'Creating work item (request length ' + postData.length +
-              ', of which ' + spts.length + ' is pt data)'
-            );
+            var postData2 = JSON.stringify(data2);
+ 
+            console.log('Checking work item status (request length ' + postData2.length + ')');
             
-            request.post({
-              url: workItemsUrl,
-              headers: headers,
-              body: postData
-            },
-            function (error, response, body) {
-  
-              if (error) throw error;
-  
-              // Extract the Id and UserId from the WorkItem
-              
-              var workItem = JSON.parse(body);
-              
-              if (!workItem.Id || !workItem.UserId) {
-                console.log('Problem with request:  ' + body);
-                return;
-              }
-              
-              console.log('Created work item (Id ' + workItem.Id + ' for user ' + workItem.UserId + ')');
-    
-              var data2 = {
-                UserId: workItem.UserId,
-                Id: workItem.Id,
-                Version: 1,
-                ActivityId: {
-                  Id: activityName,
-                  UserId: userId
-                }
-              }
-              var postData2 = JSON.stringify(data2);
-   
-              console.log('Checking work item status (request length ' + postData2.length + ')');
-              
-              // We're going to request the status for this WorkItem in a loop
-              // We'll perform up to 10 checks, 2 seconds between each
-              
-              var checked = 0;
-              var check = function () {
-                setTimeout(
-                  function() {
-                    var url = workItemsUrl + "(UserId='" + workItem.UserId + "',Id='" + workItem.Id + "')";
-                    
-                    request.get({
-                      url: url,
-                      headers: { Authorization: auth, Host: hostName }
-                    },
-                    function (error2, response2, body2) {
-  
-                      if (error2) throw error2;
-  
-                      if (response2.statusCode == 200) {
-                        var workItem2 = JSON.parse(body2);
-  
-                        console.log('Checked status: ' + workItem2.Status);
-        
-                        switch (workItem2.Status) {
-                          case 'InProgress':
-                            if (checked < 10) {
-                              checked++;
-                              check();
-                            } else {
-                              console.log('Reached check limit.');                            
-                            }
-                            break;
-                          case 'FailedDownload':
-                            console.log('Failed to download!');
-                            storeItemStatus(reqId, 'failed');
-                            break;
-                          case 'Succeeded':
-                            var remoteZip = workItem2.Arguments.OutputArguments[0].Resource;
-                            
-                            if (!remoteZip) {
-                              console.log(
-                                'Could not download (' + workItem2.Status + '): ' +
-                                JSON.stringify(workItem2.StatusDetails)
-                              );
-                            } else {
-                            
-                              var localRoot = './downloads/' + workItem.Id; 
-                              var localZip = localRoot + '.zip';
-          
-                              var r = request.get(remoteZip).pipe(fs.createWriteStream(localZip));
-                              r.on('finish',
-                                function() {
-                                  var zip = new AdmZip(localZip);
-                                  var entries = zip.getEntries(); 
-                                  var success =
-                                    unzipEntry(zip, 'jigsaw.png', localRoot, entries) &&
-                                    unzipEntry(zip, 'jigsaw.dwg', localRoot, entries);
-                                  
-                                  storeItemStatus(reqId, success ? localRoot : 'failed');
-                                }
-                              );
-                            }
-                            break;
-                          default:
-                            console.log('Unknown status: ' + workItem2.Status);
-                        }
-                      }                          
-                    });
+            // We're going to request the status for this WorkItem in a loop
+            // We'll perform up to 10 checks, 2 seconds between each
+            
+            var checked = 0;
+            var check = function () {
+              setTimeout(
+                function() {
+                  var url = workItemsUrl + "(UserId='" + workItem.UserId + "',Id='" + workItem.Id + "')";
+                  
+                  request.get({
+                    url: url,
+                    headers: { Authorization: auth, Host: hostName }
                   },
-                  2000
-                );
-              }
-              check();
-          });
-        }
-        img.src = blob;
-      });
+                  function (error2, response2, body2) {
+
+                    if (error2) throw error2;
+
+                    if (response2.statusCode == 200) {
+                      var workItem2 = JSON.parse(body2);
+
+                      console.log('Checked status: ' + workItem2.Status);
+      
+                      switch (workItem2.Status) {
+                        case 'InProgress':
+                          if (checked < 10) {
+                            checked++;
+                            check();
+                          } else {
+                            console.log('Reached check limit.');                            
+                          }
+                          break;
+                        case 'FailedDownload':
+                          console.log('Failed to download!');
+                          storeItemStatus(reqId, 'failed');
+                          break;
+                        case 'Succeeded':
+                          var remoteZip = workItem2.Arguments.OutputArguments[0].Resource;
+                          
+                          if (!remoteZip) {
+                            console.log(
+                              'Could not download (' + workItem2.Status + '): ' +
+                              JSON.stringify(workItem2.StatusDetails)
+                            );
+                          } else {
+                          
+                            var localRoot = './downloads/' + workItem.Id; 
+                            var localZip = localRoot + '.zip';
+        
+                            var r = request.get(remoteZip).pipe(fs.createWriteStream(localZip));
+                            r.on('finish',
+                              function() {
+                                var zip = new AdmZip(localZip);
+                                var entries = zip.getEntries(); 
+                                var success =
+                                  unzipEntry(zip, 'jigsaw.png', localRoot, entries) &&
+                                  unzipEntry(zip, 'jigsaw.dwg', localRoot, entries);
+                                
+                                storeItemStatus(reqId, success ? localRoot : 'failed');
+                              }
+                            );
+                          }
+                          break;
+                        default:
+                          console.log('Unknown status: ' + workItem2.Status);
+                      }
+                    }                          
+                  });
+                },
+                2000
+              );
+            }
+            check();
+        });
+      }
+      img.src = './uploads/' + args.upload;
     }
     else {
       console.log("Unknown status: " + response.statusCode);
