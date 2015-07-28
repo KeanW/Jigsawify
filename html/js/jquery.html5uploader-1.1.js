@@ -20,7 +20,7 @@
             // Settings.
             postUrl: "upload",
             cropRatio: undefined, //800 / 600,
-            maxLength: 800,
+            maxLength: 400,
             imageUrl: "image",
 
             // Callbacks.
@@ -230,7 +230,8 @@
             // Notify listeners of scaled and cropped image.
             settings.onProcessed && settings.onProcessed(canvas);
 
-            return ocanvas;
+            return canvas;
+            //return ocanvas;
         }
 
         /**
