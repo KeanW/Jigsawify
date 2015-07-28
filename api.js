@@ -120,10 +120,12 @@ exports.submitData = function (req, res) {
         var width = parseInt(args.res),
             height = Math.round(parseInt(args.height) * width / parseInt(args.width));
         
-        console.log('Reading file...');
+        console.log('Reading file: ' + args.upload);
 
         fs.readFile('./uploads/' + args.upload, function(err, blob){
           if (err) throw err;
+          
+          console.log("File is read: " + args.upload);
           
           var img = new Image(width, height);
           img.onload = function() {
