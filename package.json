@@ -16,6 +16,7 @@
 		"express": "4.x",
 		"morgan": "1.x",
     	"multer": "~0.1.6",
+		"canvas": "1.0.2",
 		"request": "*"
 	},
 	"engines": {
