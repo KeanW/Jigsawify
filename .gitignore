@@ -1,5 +1,8 @@
 node_modules
 newrelic_agent.log
+newrelic.js
 typings
 uploads
 downloads
+items
+

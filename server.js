@@ -39,6 +39,8 @@ app.use(function (req, res, next) {
 
 app.use('/', express.static(__dirname + '/html'));
 
+app.use('/downloads', express.static(__dirname + '/downloads'));
+
 /////////////////////////////////////////////////////////////////////////////////
 //  Rest API
 //
@@ -46,6 +48,8 @@ app.use('/', express.static(__dirname + '/html'));
 //app.get('/api/token', api.getToken);
 
 app.get('/api/submit', api.submitData);
+
+app.get('/api/check', api.checkData);
 
 app.post('/api/upload', function (req, res) {
   if (done) {
