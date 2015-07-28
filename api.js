@@ -242,7 +242,7 @@ exports.submitData = function (req, res) {
                             checked++;
                             check();
                           } else {
-                            console.log('Reached check limit.');
+                            console.log('Reached check limit.');                            
                           }
                           break;
                         case 'FailedDownload':
