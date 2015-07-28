@@ -120,6 +120,8 @@ exports.submitData = function (req, res) {
         var width = parseInt(args.res),
             height = Math.round(parseInt(args.height) * width / parseInt(args.width));
         
+        console.log('Reading file...');
+
         fs.readFile('./uploads/' + args.upload, function(err, blob){
           if (err) throw err;
           
@@ -128,11 +130,15 @@ exports.submitData = function (req, res) {
             var raw = new Canvas(width, height);
             var out = new Canvas(width, height);
             
+            console.log('Initializing edge detector...');
+
             var ed = new edge.EdgeDetector();
             ed.init(img, raw, out, width, height, args.threshold);
             var pts = ed.generatePoints(width, height, args2, true); // Compress by default
             var spts = JSON.stringify(pts);
   
+            console.log('Initializing work item data...');
+
             var data = {
               'odata.metadata': 'https://developer.api.autodesk.com/autocad.io/v1/$metadata#WorkItems/@Element',
               Arguments: {
