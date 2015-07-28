@@ -1,7 +1,7 @@
 var fs = require('fs');
 var request = require('request');
 var url = require('url');
-var Canvas = require('canvas'),
+var Canvas = require('./node_modules/canvas'),
     Image = Canvas.Image;
 var AdmZip = require('adm-zip');
 var edge = require('./edge');
