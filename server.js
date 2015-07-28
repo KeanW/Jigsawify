@@ -41,6 +41,8 @@ app.use('/', express.static(__dirname + '/html'));
 
 app.use('/downloads', express.static(__dirname + '/downloads'));
 
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
 /////////////////////////////////////////////////////////////////////////////////
 //  Rest API
 //
