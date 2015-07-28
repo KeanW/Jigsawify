@@ -125,8 +125,10 @@ exports.submitData = function (req, res) {
         fs.readFile('./uploads/' + args.upload, function(err, blob){
           if (err) throw err;
           
-          console.log("File is read: " + args.upload);
+          console.log("File is read: " + blob);
           
+          console.log("Creating a " + width + " x " + height + " image.");
+
           var img = new Image(width, height);
           img.onload = function() {
             var raw = new Canvas(width, height);
