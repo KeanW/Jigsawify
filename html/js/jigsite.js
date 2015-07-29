@@ -62,15 +62,15 @@ function buildCanvas(img, id, after) {
     if (id) {
       canvas = $('#' + id)[0];
       if (!canvas) {
-        
+
         if (!after) {
           after = img;
         }
-        
+
         $('<canvas id=\'' + id + '\' width=\'' + img.width +
           '\' height=\'' + img.height +
           '\'></canvas>').insertAfter(after);
-    
+
         canvas = $('#' + id)[0];
       } else {
         canvas.width = img.width;
@@ -78,30 +78,30 @@ function buildCanvas(img, id, after) {
       }
     } else {
       // Create a canvas using other means 
-      
+
       canvas = document.createElement('canvas');
       canvas.width = img.width;
       canvas.height = img.height;
-    }    
+    }
     return canvas;
 }
 
 function setStage(newStage) {
 
   // Some custom logic to be run for the stages that need it
-  
+
   if (newStage == 0) {
     $('#content')[0].style.width = '640px';
-    
+
     // Clear the engraved image, reset the slider
-    
+
     var canvas = $('#rawData2')[0];
     if (canvas) {
       canvas.height = 0;
       $('#threshold')[0].value = 70;
     }
   }
-  
+
   if (newStage == 1) {
     $('#content')[0].style.width = '100%';
     setTimeout(function(){
@@ -123,21 +123,21 @@ function setStage(newStage) {
       edgeDetector.update(edgeDetector.threshold);
       if (!already) {
         setWidth(12);
-        setPieces(1000);
+        setPieces(100);
         already = true;
       }
     }, 0);
   }
-  
+
   if (newStage == 3) {
-    
+
     // Only enter the waiting stage if going forward
-    
+
     if (stage == 2) {
-      
+
       // Create our HTML spinner
       // (from http://fgnass.github.io/spin.js)
-      
+
       var opts = {
         lines: 13, length: 28, width: 14, radius: 42, scale: 1.5,
         corners: 1, color: '#fff', opacity: 0.25, rotate: 0,
@@ -147,21 +147,21 @@ function setStage(newStage) {
       }
       var target = document.getElementById('downloading');
       var spinner = new Spinner(opts).spin(target);
-      
+
       process();
-      
+
     } else {
-      
+
       // Otherwise we skip it
-      
+
       setStage(2);
       return;
     }
   }
-  
+
   // Then we just loop through the elements, switching the ones
   // on that we need (and turning the rest that are on to be off)
-  
+
   var list = stages[newStage];
   for (var i=0; i < elements.length; i++) {
     var idx = list.indexOf(i);
@@ -178,7 +178,7 @@ function setStage(newStage) {
       }
     }
   }
-  
+
   stage = newStage;
   $('#instruction')[0].innerHTML = stageText[stage];
 }

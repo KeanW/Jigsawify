@@ -137,9 +137,6 @@ function EdgeDetector(){
       true
     );
     
-    //console.log("PD: " + JSON.stringify(this.pixelData));
-    //console.log("Found " + points.length + " points.");
-
     args = args || {};    
     args.XRes = Math.round(width);
     args.YRes = Math.round(height);
@@ -158,15 +155,13 @@ function EdgeDetector(){
     if (!pixelData)
       return;
 
-    //console.log("Threshold of " + this.threshold);
-    
     var thresh = 100 - this.threshold;
     
     // If running on the server we need to tweak the threshold
     // (probably due to image processing differences with node-canvas)
     
-    if (server)
-      thresh *= 2.5;
+    //if (server)
+    //  thresh *= 2.5;
       
     var x = 0;
     var y = 0;
