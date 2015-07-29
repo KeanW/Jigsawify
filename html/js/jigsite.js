@@ -121,7 +121,10 @@ function setStage(newStage) {
       var outcanvas = buildCanvas(img);
       edgeDetector.init(img, canvas, outcanvas);
       edgeDetector.update(edgeDetector.threshold);
-      if (!already) {
+      if (already) {
+        // This will keep the proportions of the new image
+        setWidth($('#width').val());
+      } else {
         setWidth(12);
         setPieces(100);
         already = true;
