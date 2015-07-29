@@ -92,9 +92,9 @@ exports.submitData = function (req, res) {
   // Reduce the arguments to get the basic call working
   
   var args2 = {
-    Width: Math.round(args.width),
-    Height: Math.round(args.height),
-    Pieces: Math.round(args.pieces)
+    Width: args.width,
+    Height: args.height,
+    Pieces: args.pieces
   }
   
   var params = {
