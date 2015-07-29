@@ -20,7 +20,7 @@
             // Settings.
             postUrl: "upload",
             cropRatio: undefined, //800 / 600,
-            maxLength: 400,
+            maxLength: 800,
             imageUrl: "image",
 
             // Callbacks.
@@ -176,7 +176,7 @@
             var w = Math.round(originalWidth / scaleRatio);
             var h = Math.round(originalHeight / scaleRatio);
 
-            var ocanvas = document.createElement("canvas");
+            //var ocanvas = document.createElement("canvas");
             var canvas = document.createElement("canvas");
 
             // Bepaal de breedte an hoogte, gebaseerd op orientatie.
@@ -187,23 +187,23 @@
                 case 8:
                     canvas.width = scaleHeight;
                     canvas.height = scaleWidth;
-                    ocanvas.width = originalHeight;
-                    ocanvas.height = originalWidth;
+                    //ocanvas.width = originalHeight;
+                    //ocanvas.height = originalWidth;
                     break;
                 default:
                     canvas.width = scaleWidth;
                     canvas.height = scaleHeight;
-                    ocanvas.width = originalWidth;
-                    ocanvas.height = originalHeight;
+                    //ocanvas.width = originalWidth;
+                    //ocanvas.height = originalHeight;
             }
 
             var ctx = canvas.getContext("2d");
-            var octx = ocanvas.getContext("2d");
+            //var octx = ocanvas.getContext("2d");
             
             if (orientation) {
                 // Transform canvas coordination according to specified frame size and orientation.
                 transformCoordinate(ctx, orientation, scaleWidth, scaleHeight);
-                transformCoordinate(octx, orientation, originalWidth, originalHeight);
+                //transformCoordinate(octx, orientation, originalWidth, originalHeight);
             }
 
             // For now just a white background, in the future possibly background color based on dominating image color?
@@ -211,9 +211,9 @@
             ctx.fillRect(0, 0, scaleWidth, scaleHeight);
             ctx.drawImage(img, x, y, w, h);
 
-            octx.fillStyle = "rgba(255,255,255, 0)";
-            octx.fillRect(0, 0, originalWidth, originalHeight);
-            octx.drawImage(img, 0, 0, originalWidth, originalHeight);
+            //octx.fillStyle = "rgba(255,255,255, 0)";
+            //octx.fillRect(0, 0, originalWidth, originalHeight);
+            //octx.drawImage(img, 0, 0, originalWidth, originalHeight);
 
             // Try to fix IOS6s image squash bug.
             // Test for transparency. This trick only works with JPEGs.
@@ -223,7 +223,7 @@
                 if (transparent) {
                     // Redraw image, doubling the height seems to fix the iOS6 issue.
                     ctx.drawImage(img, x, y, w, h * 2.041);
-                    octx.drawImage(img, 0, 0, originalWidth, originalHeight * 2.041);
+                    //octx.drawImage(img, 0, 0, originalWidth, originalHeight * 2.041);
                 }
             }
 

@@ -231,6 +231,7 @@ function check(id, fun) {
         function(req, res) {
           if (req !== '') {
             if (req === 'failed') {
+              window.alert('Request failed, please try again.');
               back();
             } else {
               fun({ result: req });
@@ -306,7 +307,6 @@ $(document).ready(function () {
         var newImg = document.createElement('img');
         newImg.id = 'image';
         newImg.onload = function () {
-          //settings.cropRatio = newImg.width / newImg.height;
 
           var oldHeight = newImg.height;
           var oldWidth = newImg.width;
@@ -343,7 +343,6 @@ $(document).ready(function () {
 
     onUploaded: function (success, responseText) {
       if (success) {
-        //window.alert('Image uploaded successfully: ' + responseText);
         uploadedBlob = responseText;
       } else {
         window.alert('Image upload failed: ' + responseText);
