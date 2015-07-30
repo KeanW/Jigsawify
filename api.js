@@ -245,17 +245,17 @@ function createWorkItem(auth, reqId, args) {
     Host: hostName
   }
 
+  /*
   console.log(
     'Creating work item (request length ' + postData.length +
     '): ' + postData
   );
+  */
   
-  /*
   console.log(
     'Creating work item (request length ' + postData.length +
     ', of which ' + args.length + ' is pt data)'
   );
-  */
   
   request.post({
     url: workItemsUrl,
