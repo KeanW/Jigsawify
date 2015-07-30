@@ -25,7 +25,7 @@ exports.submitData = function (req, res) {
   var reqId = randomValueBase64(6);
   res.end(reqId);
   
-  siteUrl = 'https://' + req.get('host');
+  siteUrl = 'http://' + req.get('host');
   
   var args = url.parse(req.url, true).query;
 
