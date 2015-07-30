@@ -160,8 +160,8 @@ function EdgeDetector(){
     // If running on the server we need to tweak the threshold
     // (probably due to image processing differences with node-canvas)
     
-    if (server)
-      thresh *= 2.5;
+    //if (server)
+    //  thresh *= 2.5;
       
     var x = 0;
     var y = 0;
