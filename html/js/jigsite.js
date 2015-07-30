@@ -100,8 +100,8 @@ function setStage(newStage) {
       var canvas = $('#rawData2')[0];
       if (canvas) {
         canvas.height = 0;
-        $('#threshold')[0].value = 70;
       }
+      $('#threshold')[0].value = 70;
       break;
   
     case 1:
