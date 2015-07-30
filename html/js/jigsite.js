@@ -110,8 +110,10 @@ function setStage(newStage) {
         var img = $('#image')[0];
         var canvas = buildCanvas(img, 'rawData');
         var outcanvas = buildCanvas(img);
+        var thresh = $('#threshold')[0].value;
+        edgeDetector.threshold = thresh;
         edgeDetector.init(img, canvas, outcanvas);
-        edgeDetector.update(edgeDetector.threshold);
+        edgeDetector.update(thresh);
       }, 0);
       break;
   
@@ -142,7 +144,12 @@ function setStage(newStage) {
       // Only enter the waiting stage if going forward
   
       if (stage == 2) {
-  
+
+        // Not ready to move forward if image isn't uploaded
+          
+        if (!uploadedBlob)
+          return;
+
         // Create our HTML spinner
         // (from http://fgnass.github.io/spin.js)
   
@@ -161,7 +168,6 @@ function setStage(newStage) {
         }
   
         process();
-  
       } else {
   
         // Otherwise we skip it
