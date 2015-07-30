@@ -192,7 +192,7 @@ function urlWorkItem(auth, reqId, args, imageName, width, height, threshold, suc
         } else {
           args.XRes = newArgs.XRes;
           args.YRes = newArgs.YRes;
-          args.XPixelUrl = fullUrl;
+          args.XPixelsUrl = fullUrl;
           success(JSON.stringify(args));
         }
       }
