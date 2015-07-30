@@ -18,11 +18,14 @@ var baseUrl = 'https://' + hostName;
 var workItemsUrl =  baseUrl + '/autocad.io/v1/WorkItems';
 var authUrl = baseUrl + '/authentication/v1/authenticate';
 var max_req_size = 30000;
+var siteUrl = undefined;
 
 exports.submitData = function (req, res) {
 
   var reqId = randomValueBase64(6);
   res.end(reqId);
+  
+  siteUrl = '//' + req.get('host');
   
   var args = url.parse(req.url, true).query;
 
@@ -54,7 +57,7 @@ function randomValueBase64 (len) {
     .replace(/\//g, '0'); // replace '/' with '0'
 }
 
- function authorizeAndCall(success) {
+function authorizeAndCall(success) {
 
   var params = {
     client_id: process.env.CONSUMER_KEY,
@@ -83,6 +86,27 @@ function randomValueBase64 (len) {
   );
 }
 
+function detectEdgesAndSubmit2(auth, reqId, args) {
+
+  var args2 = {
+    Width: args.width,
+    Height: args.height,
+    Pieces: args.pieces
+  }
+
+  // Width and Height are for the puzzle itself
+  // We will need to calculate the width and height for the engraving
+    
+  var width = parseInt(args.res),
+      height = Math.round(parseFloat(args2.Height) * width / parseFloat(args2.Width));
+ 
+  urlWorkItem(auth, reqId, args2, args.upload, width, height, args.threshold,
+    function(data) {
+      createWorkItem(auth, reqId, data);
+    }
+  );
+}
+
 function detectEdgesAndSubmit(auth, reqId, args) {
 
   var args2 = {
@@ -96,7 +120,7 @@ function detectEdgesAndSubmit(auth, reqId, args) {
     
   var width = parseInt(args.res),
       height = Math.round(parseFloat(args2.Height) * width / parseFloat(args2.Width));
-
+ 
   var accepted = function(data) {
     console.log('Accepted request with data of length ' + data.length);
     createWorkItem(auth, reqId, data);
@@ -139,6 +163,37 @@ function tryWorkItem(auth, reqId, args, imageName, width, height, threshold, acc
     } else {
       accepted(data);
     }
+  };
+  img.src = './uploads/' + imageName;
+}
+
+function urlWorkItem(auth, reqId, args, imageName, width, height, threshold, success) {
+  
+  console.log("Using a " + width + " x " + height + " image");
+
+  var img = new Image(width, height);
+  img.onload = function() {
+    var raw = new Canvas(width, height);
+    var out = new Canvas(width, height);
+    
+    console.log('Initializing edge detector');
+
+    var ed = new edge.EdgeDetector();
+    ed.init(img, raw, out, width, height, threshold);
+    var newArgs = ed.generatePoints(width, height, args, true); // Compress by default
+    var data = JSON.stringify(newArgs);
+    
+    var url = '/items/' + reqId + '.json';
+    var fullUrl = siteUrl + url;
+    fs.writeFile("." + url, data,
+      function(err) {
+        if (err) {
+          return console.log('Error writing engraving data: ' + err);
+        } else {
+          success(JSON.stringify({ Url: fullUrl }));
+        }
+      }
+    );
   };
   img.src = './uploads/' + imageName;
 }
@@ -192,8 +247,15 @@ function createWorkItem(auth, reqId, args) {
 
   console.log(
     'Creating work item (request length ' + postData.length +
+    '): ' + postData
+  );
+  
+  /*
+  console.log(
+    'Creating work item (request length ' + postData.length +
     ', of which ' + args.length + ' is pt data)'
   );
+  */
   
   request.post({
     url: workItemsUrl,

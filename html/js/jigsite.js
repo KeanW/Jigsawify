@@ -18,7 +18,7 @@ var elements =
     'droppedimage',  // 1
     'engravedimage', // 2
     'engimage',      // 3
-    'downloading',   // 4
+    'loading',       // 4
     'jigsaw',        // 5
     'jigimage',      // 6
     'dropbox',       // 7
@@ -148,7 +148,7 @@ function setStage(newStage) {
         className: 'spinner', top: '50%', left: '50%', shadow: false,
         hwaccel: false, position: 'absolute'
       }
-      var target = document.getElementById('downloading');
+      var target = document.getElementById('loading');
       var spinner = new Spinner(opts).spin(target);
 
       process();
