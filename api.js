@@ -86,7 +86,7 @@ function authorizeAndCall(success) {
   );
 }
 
-function detectEdgesAndSubmit2(auth, reqId, args) {
+function detectEdgesAndSubmit(auth, reqId, args) {
 
   var args2 = {
     Width: args.width,
@@ -107,7 +107,7 @@ function detectEdgesAndSubmit2(auth, reqId, args) {
   );
 }
 
-function detectEdgesAndSubmit(auth, reqId, args) {
+function detectEdgesAndSubmit2(auth, reqId, args) {
 
   var args2 = {
     Width: args.width,
@@ -180,7 +180,7 @@ function urlWorkItem(auth, reqId, args, imageName, width, height, threshold, suc
 
     var ed = new edge.EdgeDetector();
     ed.init(img, raw, out, width, height, threshold);
-    var newArgs = ed.generatePoints(width, height, args, true); // Compress by default
+    var newArgs = ed.generatePoints(width, height, {}, true); // Compress by default
     var data = JSON.stringify(newArgs);
     
     var url = '/items/' + reqId + '.json';
@@ -190,7 +190,8 @@ function urlWorkItem(auth, reqId, args, imageName, width, height, threshold, suc
         if (err) {
           return console.log('Error writing engraving data: ' + err);
         } else {
-          success(JSON.stringify({ Url: fullUrl }));
+          args.XPixelUrl = fullUrl;
+          success(JSON.stringify(args));
         }
       }
     );
@@ -245,17 +246,17 @@ function createWorkItem(auth, reqId, args) {
     Host: hostName
   }
 
-  /*
   console.log(
     'Creating work item (request length ' + postData.length +
     '): ' + postData
   );
-  */
   
+  /*
   console.log(
     'Creating work item (request length ' + postData.length +
     ', of which ' + args.length + ' is pt data)'
   );
+  */
   
   request.post({
     url: workItemsUrl,
