@@ -194,6 +194,10 @@ function forward() {
   setStage(stage+1);
 }
 
+function slide(num) {
+  edgeDetector.update(num);  
+}
+
 function process() {
   var args = {
     pieces: $('#pieces').val(),
