@@ -288,6 +288,9 @@ function createWorkItem(auth, reqId, args) {
         if (remoteZip) {
           downloadAndExtract(remoteZip, workItem.Id, reqId);
         }
+        if (report) {
+          downloadAndDisplay(report, workItem.Id);
+        }
       },
       function (report) {
         storeItemStatus(reqId, 'failed');
