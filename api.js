@@ -288,12 +288,12 @@ function createWorkItem(auth, reqId, args) {
         if (remoteZip) {
           downloadAndExtract(remoteZip, workItem.Id, reqId);
         }
+      },
+      function (report) {
+        storeItemStatus(reqId, 'failed');
         if (report) {
           downloadAndDisplay(report, workItem.Id);
         }
-      },
-      function () {
-        storeItemStatus(reqId, 'failed');
       }
     );
   });
@@ -335,14 +335,14 @@ function checkWorkItem(auth, workItem, success, failure) {
                 break;
               case 'FailedDownload':
                 console.log('Failed to download!');
-                failure();
+                failure(workItem2.StatusDetails.Report);
                 break;
               case 'Succeeded':
                 success(workItem2.Arguments.OutputArguments[0].Resource, workItem2.StatusDetails.Report);
                 break;
               default:
                 console.log('Unknown status: ' + workItem2.Status);
-                failure();
+                failure(workItem2.StatusDetails.Report);
             }
           }
         });
