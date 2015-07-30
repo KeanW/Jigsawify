@@ -284,8 +284,13 @@ function createWorkItem(auth, reqId, args) {
     // We'll perform up to 10 checks, 2 seconds between each
 
     checkWorkItem(auth, workItem,
-      function(remoteZip) {
-        downloadAndExtract(remoteZip, workItem.Id, reqId);
+      function(remoteZip, report) {
+        if (remoteZip) {
+          downloadAndExtract(remoteZip, workItem.Id, reqId);
+        }
+        if (report) {
+          downloadAndDisplay(report, workItem.Id);
+        }
       },
       function () {
         storeItemStatus(reqId, 'failed');
@@ -333,7 +338,7 @@ function checkWorkItem(auth, workItem, success, failure) {
                 failure();
                 break;
               case 'Succeeded':
-                success(workItem2.Arguments.OutputArguments[0].Resource);
+                success(workItem2.Arguments.OutputArguments[0].Resource, workItem2.StatusDetails.Report);
                 break;
               default:
                 console.log('Unknown status: ' + workItem2.Status);
@@ -364,6 +369,19 @@ function downloadAndExtract(remoteZip, workItemId, reqId) {
         unzipEntry(zip, 'jigsaw.dwg', localRoot, entries);
       
       storeItemStatus(reqId, success ? localRoot : 'failed');
+    }
+  );
+}
+
+function downloadAndDisplay(report, workItemId) {
+  
+  console.log('Downloading and displaying report');
+  var localReport = './downloads/' + workItemId + ".txt"; 
+
+  var r = request.get(report).pipe(fs.createWriteStream(localReport));
+  r.on('finish',
+    function() {
+      console.log('Report written to ' + localReport);
     }
   );
 }
