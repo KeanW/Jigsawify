@@ -2,7 +2,7 @@
 <html >
   <head>
     <meta charset="UTF-8">
-    <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic|Droid+Sans|Lobster' rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic|Droid+Sans|Lobster" rel="stylesheet" type="text/css">
     <title>Jigsawify</title>
     <link rel="stylesheet" href="css/style2.css">
     <link rel="stylesheet" href="css/style3.css">
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <input class="slider" id="threshold" type="range" min="0" max="100" value="70" step="5" oninput="slide(parseInt($(this).val()))" />
+    <input class="slider" id="threshold" type="range" min="0" max="100" value="70" step="5" oninput="slide(this.value)" onchange="slide(this.value)" />
     <div id="size" class="text">
       <input id="width" type="number" class="num" /> x <input id="height" type="number" class="num" />
       <select id="units"><option value="inches">inches</option><option value="cm">cm</option></select>
@@ -58,7 +58,7 @@
       <button id="download" type="button" class="btn">Download DWG</button>
     </div>
 
-    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
     <script src="js/jquery.html5uploader-1.1.js"></script>
     <script src="js/exif.js"></script>
     <script src="js/edgedetector.js"></script>
