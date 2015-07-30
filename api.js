@@ -86,7 +86,7 @@ function authorizeAndCall(success) {
   );
 }
 
-function detectEdgesAndSubmit(auth, reqId, args) {
+function detectEdgesAndSubmit2(auth, reqId, args) {
 
   var args2 = {
     Width: args.width,
@@ -107,7 +107,7 @@ function detectEdgesAndSubmit(auth, reqId, args) {
   );
 }
 
-function detectEdgesAndSubmit2(auth, reqId, args) {
+function detectEdgesAndSubmit(auth, reqId, args) {
 
   var args2 = {
     Width: args.width,
