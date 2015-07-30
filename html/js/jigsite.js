@@ -204,7 +204,7 @@ function process() {
     width: $('#width').val(),
     height: $('#height').val(),
     units: $('#units').val(),
-    res: 200,
+    res: pixelsWidth,
     threshold: $('#threshold').val(),
     upload: uploadedBlob
   }
