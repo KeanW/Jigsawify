@@ -270,35 +270,40 @@ function createWorkItem(auth, reqId, args) {
     if (error) throw error;
 
     // Extract the Id and UserId from the WorkItem
-    
-    var workItem = JSON.parse(body);
-    
-    if (!workItem.Id || !workItem.UserId) {
-      console.log('Problem with request:  ' + body);
-      return;
-    }
-    
-    console.log('Created work item (Id ' + workItem.Id + ' for user ' + workItem.UserId + ')');
 
-    // We're going to request the status for this WorkItem in a loop
-    // We'll perform up to 10 checks, 2 seconds between each
-
-    checkWorkItem(auth, workItem,
-      function(remoteZip, report) {
-        if (remoteZip) {
-          downloadAndExtract(remoteZip, workItem.Id, reqId);
-        }
-        if (report) {
-          downloadAndDisplay(report, workItem.Id);
-        }
-      },
-      function (report) {
-        storeItemStatus(reqId, 'failed');
-        if (report) {
-          downloadAndDisplay(report, workItem.Id);
-        }
+    try {
+      var workItem = JSON.parse(body);
+      
+      if (!workItem.Id || !workItem.UserId) {
+        console.log('Problem with request:  ' + body);
+        return;
       }
-    );
+      
+      console.log('Created work item (Id ' + workItem.Id + ' for user ' + workItem.UserId + ')');
+  
+      // We're going to request the status for this WorkItem in a loop
+      // We'll perform up to 10 checks, 2 seconds between each
+  
+      checkWorkItem(auth, workItem,
+        function(remoteZip, report) {
+          if (remoteZip) {
+            downloadAndExtract(remoteZip, workItem.Id, reqId);
+          }
+          if (report) {
+            downloadAndDisplay(report, workItem.Id);
+          }
+        },
+        function (report) {
+          storeItemStatus(reqId, 'failed');
+          if (report) {
+            downloadAndDisplay(report, workItem.Id);
+          }
+        }
+      );
+    }
+    catch (ex) {
+      console.log('Problem with request:  ' + body);
+    }
   });
 }
 
