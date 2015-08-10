@@ -276,6 +276,7 @@ function createWorkItem(auth, reqId, args) {
       
       if (!workItem.Id || !workItem.UserId) {
         console.log('Problem with request:  ' + body);
+        storeItemStatus(reqId, 'failed');
         return;
       }
       
@@ -303,6 +304,7 @@ function createWorkItem(auth, reqId, args) {
     }
     catch (ex) {
       console.log('Problem with request:  ' + body);
+      storeItemStatus(reqId, 'failed');
     }
   });
 }
