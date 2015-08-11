@@ -101,8 +101,8 @@ function detectEdgesAndSubmit(auth, reqId, args) {
       height = Math.round(parseFloat(args2.Height) * width / parseFloat(args2.Width));
  
   urlWorkItem(auth, reqId, args2, args.upload, width, height, args.threshold,
-    function(data) {
-      createWorkItem(auth, reqId, data);
+    function(data, pixUrl) {
+      createWorkItem(auth, reqId, data, pixUrl);
     }
   );
 }
@@ -192,8 +192,7 @@ function urlWorkItem(auth, reqId, args, imageName, width, height, threshold, suc
         } else {
           args.XRes = newArgs.XRes;
           args.YRes = newArgs.YRes;
-          args.XPixelsUrl = fullUrl;
-          success(JSON.stringify(args));
+          success(JSON.stringify(args), fullUrl);
         }
       }
     );
@@ -201,7 +200,7 @@ function urlWorkItem(auth, reqId, args, imageName, width, height, threshold, suc
   img.src = './uploads/' + imageName;
 }
 
-function createWorkItem(auth, reqId, args) {
+function createWorkItem(auth, reqId, args, pixUrl) {
 
   console.log('Initializing work item data');
 
@@ -218,6 +217,11 @@ function createWorkItem(auth, reqId, args) {
           Name: 'Params',
           ResourceKind: 'Embedded',
           Resource: 'data:application/json, ' + args,
+          StorageProvider: 'Generic'
+        },
+        {
+          Name: 'Pixels',
+          Resource: pixUrl,
           StorageProvider: 'Generic'
         }
       ],
