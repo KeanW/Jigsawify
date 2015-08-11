@@ -220,7 +220,7 @@ function createWorkItem(auth, reqId, args, pixUrl) {
           StorageProvider: 'Generic'
         },
         {
-          Name: 'Pixels',
+          Name: 'PixelsUrl',
           Resource: pixUrl,
           StorageProvider: 'Generic'
         }
