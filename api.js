@@ -12,7 +12,7 @@ fs.mkdir('downloads', function() {});
 fs.mkdir('items', function() {});
 
 var activityName = 'JigsawActivity';
-var userId = 'a177d1b9-4b06-4f03-aff1-502ce915c3c0';//36db5451-2ddc-4e3c-99de-37bd5a8810f8';
+var userId = 'a177d1b9-4b06-4f03-aff1-502ce915c3c0'; // was 36db5451-2ddc-4e3c-99de-37bd5a8810f8';
 var hostName = 'developer.api.autodesk.com';
 var baseUrl = 'https://' + hostName;
 var workItemsUrl =  baseUrl + '/autocad.io/v1/WorkItems';
@@ -107,6 +107,10 @@ function detectEdgesAndSubmit(auth, reqId, args) {
   );
 }
 
+/*
+
+Defunct code-path (as we pass points via a URL)
+
 function detectEdgesAndSubmit2(auth, reqId, args) {
 
   var args2 = {
@@ -166,6 +170,7 @@ function tryWorkItem(auth, reqId, args, imageName, width, height, threshold, acc
   };
   img.src = './uploads/' + imageName;
 }
+*/
 
 function urlWorkItem(auth, reqId, args, imageName, width, height, threshold, success) {
   
@@ -252,17 +257,7 @@ function createWorkItem(auth, reqId, args, pixUrl) {
     Host: hostName
   }
 
-  console.log(
-    'Creating work item (request length ' + postData.length +
-    '): ' + postData
-  );
-  
-  /*
-  console.log(
-    'Creating work item (request length ' + postData.length +
-    ', of which ' + args.length + ' is pt data)'
-  );
-  */
+  console.log('Creating work item (request length ' + postData.length + '): ' + postData);
   
   request.post({
     url: workItemsUrl,
