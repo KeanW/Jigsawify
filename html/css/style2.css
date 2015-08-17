@@ -77,7 +77,7 @@ p {
 input[type=range] {
   background-color:#CC5500;
   -webkit-appearance: none;
-  margin: 12.5px 0;
+  margin: 50px 10px;
 }
 input[type=range]:focus {
   outline: none;
