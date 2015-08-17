@@ -110,7 +110,7 @@ input[type=range].slider::-webkit-slider-runnable-track {
   width: 100%;
   height: 9px;
   cursor: pointer;
-  box-shadow: 1px 1px px #666666, 0px 0px 1px #737373;
+  box-shadow: 1px 1px 3px #666666, 0px 0px 1px #737373;
   background: #ff8c00;
   border-radius: 7px;
   border: 1px solid #ffffff;
@@ -118,13 +118,13 @@ input[type=range].slider::-webkit-slider-runnable-track {
 input[type=range].slider::-webkit-slider-thumb {
   box-shadow: 1px 1px 3px #666666, 0px 0px 1px #737373;
   border: 3px solid #ffffff;
-  height: 34px;
-  width: 34px;
+  height: 44px;
+  width: 44px;
   border-radius: 22px;
   background: #ffa333;
   cursor: pointer;
   -webkit-appearance: none;
-  margin-top: -13.5px;
+  margin-top: -18.5px;
 }
 input[type=range].slider:focus::-webkit-slider-runnable-track {
   background: #ff981a;
@@ -159,13 +159,13 @@ input[type=range].slider::-ms-fill-lower {
   background: #e67e00;
   border: 1px solid #ffffff;
   border-radius: 14px;
-  box-shadow: 1px 1px px #666666, 0px 0px 1px #737373;
+  box-shadow: 1px 1px 3px #666666, 0px 0px 1px #737373;
 }
 input[type=range].slider::-ms-fill-upper {
   background: #ff8c00;
   border: 1px solid #ffffff;
   border-radius: 14px;
-  box-shadow: 1px 1px px #666666, 0px 0px 1px #737373;
+  box-shadow: 1px 1px 3px #666666, 0px 0px 1px #737373;
 }
 input[type=range].slider::-ms-thumb {
   box-shadow: 1px 1px 3px #666666, 0px 0px 1px #737373;
