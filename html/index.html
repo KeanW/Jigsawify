@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <link href="http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic|Droid+Sans|Lobster" rel="stylesheet" type="text/css">
     <title>Jigsawify</title>
-    <link rel="stylesheet" href="css/style2.css">
-    <link rel="stylesheet" href="css/style3.css">
+    <link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
     <h2>Jigsawify</h2>
@@ -42,12 +41,11 @@
       </div>
     </div>
 
-    <input data-idx='1' data-prev='' class="slider" id="threshold" type="range" min="0" max="100" value="70" step="5" oninput="slide(this.value)" onchange="slide(this.value)" />
+    <input class="slider" id="threshold" type="range" min="0" max="100" value="70" step="5" oninput="slide(this.value)" onchange="slide(this.value)" />
     <div id="size" class="text">
-      <input id="width" type="number" class="num" /> x <input id="height" type="number" class="num" />
-      <select id="units"><option value="inches">inches</option><option value="cm">cm</option></select>
-      <span>&nbsp;&nbsp;</span>
-      <input id="pieces" type="number" class="num" /> pieces
+      <input class="entry" id="width" type="number" class="num" /><span class="label"> x </span><input class="entry" id="height" type="number" class="num" />
+      <select class="units" id="units"><option value="inches">inches</option><option value="cm">cm</option></select>
+      <input class="entry" id="pieces" type="number" class="num" /> <span class="label">pieces</span>
     </div>
     <br />
     <br />
