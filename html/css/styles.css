@@ -21,7 +21,6 @@ h2 {
 .entry, .units, .label {
   font-size: 20px;
   font-family: "Droid Sans";
-  width: 60px;
   height: 30px;
   border-radius: 9px;
   text-align: center;
@@ -29,6 +28,7 @@ h2 {
 }
 
 .entry {
+  width: 70px;
   border: 3px solid #ffa333;
   box-shadow: 1px 1px 3px #333333, 0px 0px 1px #666666;
   transition: box-shadow 0.3s, border 0.3s;
