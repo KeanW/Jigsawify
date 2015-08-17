@@ -90,6 +90,7 @@
     opacity: 0;
     z-index: 1;
     width: 130px;
+    height: 50px;
     max-width: 130px;
     overflow: hidden;
 }
@@ -107,13 +108,39 @@
 }
 
 .btn {
-  color: white;
-  background-color: darkorange;
-  border-radius: 4px;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  font-family: "Droid Sans";
-  font-size: 16px;
+  background: #FFA333;
+  background-image: -webkit-linear-gradient(top, #FFA333, darkorange);
+  background-image: -moz-linear-gradient(top, #FFA333, darkorange);
+  background-image: -ms-linear-gradient(top, #FFA333, darkorange);
+  background-image: -o-linear-gradient(top, #FFA333, darkorange);
+  background-image: linear-gradient(to bottom, #FFA333, darkorange);
+  -webkit-border-radius: 18;
+  -moz-border-radius: 18;
+  border-radius: 18px;
+  -webkit-box-shadow: 0px 1px 3px #666666;
+  -moz-box-shadow: 0px 1px 3px #666666;
+  box-shadow: 0px 1px 3px #666666;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  border: solid #fff 2px;
+  text-decoration: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  outline: 0;
 }
+
+.btn:hover {
+  background: darkorange;
+  background-image: -webkit-linear-gradient(top, darkorange, #d66a00);
+  background-image: -moz-linear-gradient(top, darkorange, #d66a00);
+  background-image: -ms-linear-gradient(top, darkorange, #d66a00);
+  background-image: -o-linear-gradient(top, darkorange, #d66a00);
+  background-image: linear-gradient(to bottom, darkorange, #d66a00);
+  text-decoration: none;
+}
+
 
 .slider {
   width: 50%;

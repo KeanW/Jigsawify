@@ -37,16 +37,15 @@
         <br />
         <div class="media-drop-placeholder-uploadbutton">
           <input id="realUploadBtn" name="media-drop-placeholder-file" type="file" accept="image/*" tabindex="-1" />
-          <button id="uploadBtn" type="button" class="btn" tabindex="-1" disabled="disabled">Browse&hellip;</button>
+          <button id="uploadBtn" type="button" class="btn" tabindex="-1">Browse&hellip;</button>
         </div>
       </div>
     </div>
 
-    <input class="slider" id="threshold" type="range" min="0" max="100" value="70" step="5" oninput="slide(this.value)" onchange="slide(this.value)" />
+    <input data-idx='1' data-prev='' class="slider" id="threshold" type="range" min="0" max="100" value="70" step="5" oninput="slide(this.value)" onchange="slide(this.value)" />
     <div id="size" class="text">
       <input id="width" type="number" class="num" /> x <input id="height" type="number" class="num" />
       <select id="units"><option value="inches">inches</option><option value="cm">cm</option></select>
-      <!--br/><br/-->
       <span>&nbsp;&nbsp;</span>
       <input id="pieces" type="number" class="num" /> pieces
     </div>
