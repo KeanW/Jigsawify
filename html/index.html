@@ -2,9 +2,12 @@
 <html >
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic|Droid+Sans|Lobster" rel="stylesheet" type="text/css">
     <title>Jigsawify</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
   </head>
   <body>
     <h2>Jigsawify</h2>
@@ -14,14 +17,18 @@
     </div>
 
     <!-- Drop media element. -->
-    <div id="content" class="media-drop" style="width: 640px">
+    <div id="content" class="media-drop">
 
-      <!-- Image placeholder. -->
-      <div style="display:none" class="wrapper" id="droppedimage">
-        <img alt="Original Image" id="image">
-      </div>
-      <div style="display:none" class="wrapper2" id="engravedimage">
-        <img alt="Engraving Image" id="engimage">
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <!-- Image placeholder. -->
+          <div style="display:none" class="wrapper" id="droppedimage">
+            <img alt="Original Image" id="image">
+          </div>
+          <div style="display:none" class="wrapper2" id="engravedimage">
+            <img alt="Engraving Image" id="engimage">
+          </div>
+        </div>
       </div>
       <div style="display:none" class="wrapper3" id="loading">
       </div>
@@ -29,7 +36,7 @@
         <img alt="Jigsaw" id="jigimage">
       </div>
       
-      <div id="dropbox" class="media-drop-placeholder" style="width: 640px; height: 320px">
+      <div id="dropbox" class="media-drop-placeholder">
         <span class="media-drop-placeholder-title">Drop image here</span>
         <br/>
         <span class="media-drop-placeholder-or">or</span>
@@ -43,9 +50,9 @@
 
     <input class="slider" id="threshold" type="range" min="0" max="100" value="70" step="5" oninput="slide(this.value)" onchange="slide(this.value)" />
     <div id="size" class="text">
-      <input class="entry" id="width" type="number" class="num" /><span class="label"> x </span><input class="entry" id="height" type="number" class="num" />
+      <input class="entry" id="width" type="number" class="num" /><span class="desc"> x </span><input class="entry" id="height" type="number" class="num" />
       <select class="units" id="units"><option value="inches">inches</option><option value="cm">cm</option></select>
-      <input class="entry" id="pieces" type="number" class="num" /> <span class="label">pieces</span>
+      <input class="entry" id="pieces" type="number" class="num" /> <span class="desc">pieces</span>
     </div>
     <br />
     <br />
@@ -56,6 +63,7 @@
     </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.html5uploader-1.1.js"></script>
     <script src="js/exif.js"></script>
     <script src="js/edgedetector.js"></script>

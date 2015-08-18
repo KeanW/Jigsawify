@@ -68,7 +68,7 @@ function buildCanvas(img, id, after) {
           after = img;
         }
 
-        $('<canvas id=\'' + id + '\' width=\'' + img.width +
+        $('<canvas class=\'can\' id=\'' + id + '\' width=\'' + img.width +
           '\' height=\'' + img.height +
           '\'></canvas>').insertAfter(after);
 
@@ -93,7 +93,7 @@ function setStage(newStage) {
 
   switch (newStage) {
     case 0:
-      $('#content')[0].style.width = '640px';
+      //$('#content')[0].style.width = '640px';
   
       // Clear the engraved image, reset the slider
   
@@ -105,7 +105,7 @@ function setStage(newStage) {
       break;
   
     case 1:
-      $('#content')[0].style.width = '100%';
+      //$('#content')[0].style.width = '100%';
       setTimeout(function(){
         var img = $('#image')[0];
         var canvas = buildCanvas(img, 'rawData');
@@ -118,7 +118,7 @@ function setStage(newStage) {
       break;
   
     case 2:
-      $('#content')[0].style.width = '640px';
+      //$('#content')[0].style.width = '640px';
       setTimeout(function(){
         if (spinner)
           spinner.stop();
