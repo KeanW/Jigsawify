@@ -110,7 +110,6 @@ input[type=range].slider {
   background-color:#CC5500;
   -webkit-appearance: none;
   margin: 35px 10px 50px 10px;
-  width: 80%;
 }
 input[type=range].slider:focus {
   outline: none;
@@ -330,17 +329,14 @@ input[type=range].slider:focus::-ms-fill-upper {
   text-decoration: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 681px) {
   .wrapper { width: 620px; }  
   .media-drop-placeholder { width: 640px; }
-}
-
-@media (max-width: 767px) {
-  .wrapper { width: 600px; }  
-  .media-drop-placeholder { width: 600px; }
+  input[type=range].slider { width: 580px; }
 }
 
 @media (max-width: 680px) {
   .wrapper { width: 300px; }
   .media-drop { width: 90%; }
+  input[type=range].slider { width: 80%; }
 }
