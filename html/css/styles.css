@@ -92,6 +92,8 @@ p {
   height: 300px;
   width: 300px;
   margin-left: auto;
+  margin-bottom: 0px;
+  margin-top: -5px;
 }
 
 .wrapper4 {
@@ -313,8 +315,7 @@ input[type=range].slider:focus::-ms-fill-upper {
   padding: 10px 20px 10px 20px;
   border: solid #fff 2px;
   text-decoration: none;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 10px;
   outline: 0;
   min-width: 120px;
 }
