@@ -51,10 +51,10 @@ input[type=number].entry:focus {
 }
 
 p {
-  width: 80%;
+  width: 95%;
   margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 20px;
 }
 
@@ -188,7 +188,7 @@ input[type=range].slider:focus::-ms-fill-upper {
 
 .media-drop {
   position: relative;
-  margin: 60px auto;
+  margin: 30px auto;
   text-align: left;
   width: 640px;
 }
@@ -206,7 +206,7 @@ input[type=range].slider:focus::-ms-fill-upper {
   border: 3px solid #e1e1e8;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-  border-radius: 3px;
+  border-radius: 15px;
   text-align: center;
   vertical-align: middle;
   margin-left: auto;
