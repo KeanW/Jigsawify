@@ -110,7 +110,7 @@ input[type=range].slider {
   background-color:#CC5500;
   -webkit-appearance: none;
   margin: 35px 10px 50px 10px;
-  width: 50%;
+  width: 80%;
 }
 input[type=range].slider:focus {
   outline: none;
