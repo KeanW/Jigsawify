@@ -339,6 +339,42 @@ input[type=range].slider:focus::-ms-fill-upper {
   text-decoration: none;
 }
 
+/* Tooltip */
+.tooltip > .tooltip-inner {
+  font-family: "Droid Sans", Arial;
+  background-color: green; 
+  color: #FFFFFF; 
+  padding: 5px;
+  font-size: 20px;
+}
+
+/* Tooltip on top */
+.tooltip.top > .tooltip-arrow {
+    border-top: 5px solid green;
+}
+
+/* Tooltip on bottom */
+.tooltip.bottom > .tooltip-arrow {
+    border-bottom: 5px solid green;
+}
+
+/* Tooltip on left */
+.tooltip.left > .tooltip-arrow {
+    border-left: 5px solid green;
+}
+/* Tooltip on right */
+.tooltip.right > .tooltip-arrow {
+    border-right: 5px solid green;
+}
+
+.unselectable {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 @media (min-width: 681px) {
   .wrapper { width: 620px; }  
   .media-drop-placeholder { width: 640px; }
@@ -349,18 +385,4 @@ input[type=range].slider:focus::-ms-fill-upper {
   .wrapper { width: 300px; }
   .media-drop { width: 90%; }
   input[type=range].slider { width: 80%; }
-}
-
-/* Tooltip */
-.tooltip > .tooltip-inner {
-  font-family: "Droid Sans", Arial;
-  background-color: green; 
-  color: #FFFFFF; 
-  padding: 5px;
-  font-size: 20px;
-}
-
-/* Tooltip on right */
-.tooltip.right > .tooltip-arrow {
-    border-right: 5px solid green;
 }

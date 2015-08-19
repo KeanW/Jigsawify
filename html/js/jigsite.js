@@ -304,7 +304,7 @@ function setPieces(val) {
 
 $(document).ready(function () {
 
-  $('#title').tooltip({ placement: "auto right"}); 
+  $('#title').tooltip({ placement: window.innerWidth < 681 ? "bottom" : "right"}); 
 
   $('#width').change(function () { setWidth($(this).val()); } );
   $('#height').change(function () { setHeight($(this).val()); } );
