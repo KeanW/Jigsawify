@@ -24,6 +24,10 @@ h2 {
   padding: 25px 0;
 }
 
+#explanation {
+  padding-bottom: 0;
+}
+
 .entry, .units, .desc {
   font-size: 24px;
   font-family: "Droid Sans";
