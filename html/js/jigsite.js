@@ -9,8 +9,8 @@ var stageText =
     '1. Choose your favorite picture',
     '2. Adjust the look of the engraving using the slider',
     '3. Choose the size and number of pieces',
-    '4. Waiting for a response from the Autodesk cloud...',
-    '5. Check the results and download your DWG'
+    'Waiting for a response from the Autodesk cloud...',
+    '4. Check the results and download your DWG'
   ];
 
 var elements =
