@@ -242,7 +242,7 @@ function process() {
             if (res2.result) {
               //console.log('Found data: ' + res2.result);
               $('#jigimage').attr('src', res2.result + '/jigsaw.png');
-              $('#download').attr('onclick', 'window.location.href="' + res2.result + '/jigsawLines.dwg"');
+              $('#download').attr('onclick', 'window.location.href="' + res2.result + '/jigsaw.dwg"');
               forward();
             }
           });
