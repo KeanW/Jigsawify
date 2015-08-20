@@ -304,6 +304,10 @@ function setPieces(val) {
 
 $(document).ready(function () {
 
+  // Disable caching of AJAX responses (needed for IE)
+
+  $.ajaxSetup({ cache: false });
+
   $('#title').tooltip({ placement: window.innerWidth < 681 ? "bottom" : "right"}); 
 
   $('#width').change(function () { setWidth($(this).val()); } );
