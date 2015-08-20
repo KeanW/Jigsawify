@@ -375,7 +375,7 @@ function downloadAndExtract(remoteZip, workItemId, reqId) {
       var entries = zip.getEntries(); 
       var success =
         unzipEntry(zip, 'jigsaw.png', localRoot, entries) &&
-        unzipEntry(zip, 'jigsaw.dwg', localRoot, entries);
+        unzipEntry(zip, 'jigsawLines.dwg', localRoot, entries);
       
       storeItemStatus(reqId, success ? localRoot : 'failed');
     }
