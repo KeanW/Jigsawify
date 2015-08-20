@@ -236,11 +236,11 @@ function process() {
     function(req, res) {
       if (res === 'success') {  
         if (req !== '') {
-          console.log('Request Id is ' + req);
+          //console.log('Request Id is ' + req);
 
           check(req, function(res2) {
             if (res2.result) {
-              console.log('Found data: ' + res2.result);
+              //console.log('Found data: ' + res2.result);
               $('#jigimage').attr('src', res2.result + '/jigsaw.png');
               $('#download').attr('onclick', 'window.location.href="' + res2.result + '/jigsaw.dwg"');
               forward();
@@ -383,7 +383,7 @@ $(document).ready(function () {
     // Progress during upload
 
     onUploadProgress: function (progress) {
-      window.console && console.log('Upload progress: ' + progress);
+      //window.console && console.log('Upload progress: ' + progress);
     }
   });
 
