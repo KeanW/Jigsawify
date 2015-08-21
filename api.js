@@ -409,9 +409,10 @@ function unzipEntry(zip, file, path, entries) {
 function storeItemStatus(reqId, status) {
 
   fs.writeFile('./items/' + reqId, status,
-    function(err) {
+    function (err) {
       if (err) {
         return console.log('Write error: ' + err);
       }
-  });  
+    }
+  );  
 }

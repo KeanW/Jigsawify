@@ -243,8 +243,10 @@ function process() {
             if (res2.result) {
               //console.log('Found data: ' + res2.result);
               $('#jigimage').attr('src', res2.result + '/jigsaw.png');
-              $('#dwg').attr('onclick', 'window.location.href="' + res2.result + '/jigsaw.dwg"');
-              $('#dxf').attr('onclick', 'window.location.href="' + res2.result + '/jigsaw.dxf"');
+              //$('#dwg').attr('onclick', 'window.location.href="' + res2.result + '/jigsaw.dwg"');
+              //$('#dxf').attr('onclick', 'window.location.href="' + res2.result + '/jigsaw.dxf"');
+              setLinkAndSizeTooltip('#dwg', res2.result + '/jigsaw.dwg');
+              setLinkAndSizeTooltip('#dxf', res2.result + '/jigsaw.dxf');
               forward();
             }
           });
@@ -252,6 +254,29 @@ function process() {
       }
     }
   );  
+}
+
+function setLinkAndSizeTooltip(id, url) {
+  findSize(url, function(size) {
+    var elem = $(id);
+    elem.attr('onclick', 'window.location.href="' + url + '"');
+    elem.tooltip(
+      { placement: window.innerWidth < 681 ? "bottom" : "right",
+        title: size
+      }
+    ); 
+  });
+}
+
+function findSize(url, success) {
+  var request;
+  request = $.ajax({
+    type: "HEAD",
+    url: url,
+    success: function () {
+      success(request.getResponseHeader("Content-Length"));
+    }
+  });
 }
 
 function check(id, fun) {
