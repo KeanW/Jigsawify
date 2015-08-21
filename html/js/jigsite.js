@@ -10,7 +10,7 @@ var stageText =
     '2. Adjust the look of the engraving using the slider',
     '3. Choose the size and number of pieces',
     'Waiting for a response from the Autodesk cloud...',
-    '4. Check the results and download your DWG'
+    '4. Check the results and download your DWG or DXF'
   ];
 
 var elements =
@@ -28,18 +28,19 @@ var elements =
     'nav',           // 10
     'back',          // 11
     'next',          // 12
-    'download'       // 13
+    'dwg',           // 13
+    'dxf'            // 14
   ];
 
 // Elements that are visible at each stage
 
 var stages =
   [
-    [0, 7],             // Stage 0 - ready to drop
-    [1, 8, 10, 11, 12], // Stage 1 - image loaded, adjust slider
-    [2, 9, 10, 11, 12], // Stage 2 - choose size and pieces
-    [4, 6, 10, 11],     // Stage 3 - waiting...
-    [5, 6, 10, 11, 13]  // Stage 4 - show results
+    [0, 7],                 // Stage 0 - ready to drop
+    [1, 8, 10, 11, 12],     // Stage 1 - image loaded, adjust slider
+    [2, 9, 10, 11, 12],     // Stage 2 - choose size and pieces
+    [4, 6, 10, 11],         // Stage 3 - waiting...
+    [5, 6, 10, 11, 13, 14]  // Stage 4 - show results
   ];
 
 // Initialize all the elements to be considered on
@@ -242,7 +243,8 @@ function process() {
             if (res2.result) {
               //console.log('Found data: ' + res2.result);
               $('#jigimage').attr('src', res2.result + '/jigsaw.png');
-              $('#download').attr('onclick', 'window.location.href="' + res2.result + '/jigsaw.dwg"');
+              $('#dwg').attr('onclick', 'window.location.href="' + res2.result + '/jigsaw.dwg"');
+              $('#dxf').attr('onclick', 'window.location.href="' + res2.result + '/jigsaw.dxf"');
               forward();
             }
           });
