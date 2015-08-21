@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jigsawify</title>
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Lobster" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Lobster"
+          rel="stylesheet" type="text/css">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
   </head>
   <body>
-    <h2 class="unselectable" id="title" title="Creates a DWG to drive a laser cutter">Jigsawify</h2>
+    <h2 class="unselectable" id="title" title="Creates a DWG to drive a laser cutter">
+      Jigsawify
+    </h2>
     <div>
       <p id="explanation">Build a one-of-a-kind jigsaw puzzle!</p>
       <p id="instruction">1. Choose your favorite picture</p>
     </div>
-
-    <!-- Drop media element. -->
     <div id="content" class="media-drop">
-
       <div class="container-fluid">
         <div class="row-fluid">
-          <!-- Image placeholder. -->
           <div style="display:none" class="wrapper" id="droppedimage">
             <img alt="Original Image" id="image">
           </div>
@@ -34,35 +33,38 @@
       </div>
       <div style="display:none" class="wrapper4" id="jigsaw">
         <img alt="Jigsaw" id="jigimage">
-      </div>
-      
+      </div>      
       <div id="dropbox" class="media-drop-placeholder">
         <span class="media-drop-placeholder-title">Drop image here</span>
         <br/>
         <span class="media-drop-placeholder-or">or</span>
         <br />
         <div class="media-drop-placeholder-uploadbutton">
-          <input id="realUploadBtn" name="media-drop-placeholder-file" type="file" accept="image/*" tabindex="-1" />
+          <input id="realUploadBtn" name="media-drop-placeholder-file"
+                 type="file" accept="image/*" tabindex="-1" />
           <button id="uploadBtn" type="button" class="btn" tabindex="-1">Browse&hellip;</button>
         </div>
       </div>
     </div>
-
-    <input class="slider" id="threshold" type="range" min="0" max="100" value="70" step="5" onchange="slide(this.value)" />
+    <input class="slider" id="threshold" type="range" min="0" max="100"
+           value="70" step="5" onchange="slide(this.value)" />
     <div id="size" class="text">
-      <input class="entry" id="width" type="number" class="num" /><span class="desc">&nbsp;x&nbsp;</span><input class="entry" id="height" type="number" class="num" />
-      <select class="units" id="units"><option value="inches">inches</option><option value="cm">cm</option></select>
-      <input class="entry" id="pieces" type="number" class="num" /> <span class="desc">&nbsp;pieces</span>
+      <input class="entry" id="width" type="number" class="num" />
+      <span class="desc">&nbsp;x&nbsp;</span>
+      <input class="entry" id="height" type="number" class="num" />
+      <select class="units" id="units">
+        <option value="inches">inches</option>
+        <option value="cm">cm</option>
+      </select>
+      <input class="entry" id="pieces" type="number" class="num" />
+      <span class="desc">&nbsp;pieces</span>
     </div>
     <div id="nav">
       <button id="back" type="button" class="btn" onclick="back();">Back</button>
       <button id="next" type="button" class="btn" onclick="forward();">Next</button>
       <button id="download" type="button" class="btn">Download DWG</button>
     </div>
-    <br/>
-    <br/>
-    <br/>
-    
+    <br/><br/><br/>    
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.html5uploader-1.1.js"></script>
