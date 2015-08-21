@@ -260,7 +260,7 @@ function setLinkAndSizeTooltip(id, url) {
   findSize(url, function(size) {
     var elem = $(id);
     elem.attr('onclick', 'window.location.href="' + url + '"');
-    elem.tooltip( { placement: "top", title: humanFileSize(size, false) } );
+    elem.tooltip( { placement: "top", title: humanFileSize(size, true) } );
   });
 }
 
@@ -272,7 +272,7 @@ function humanFileSize(bytes, si) {
     return bytes + ' B';
   }
   var units = si
-    ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+    ? ['KB','MB','GB','TB','PB','EB','ZB','YB']
     : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
   var u = -1;
   do {
