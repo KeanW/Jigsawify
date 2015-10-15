@@ -15,7 +15,7 @@ var activityName = 'JigsawActivity';
 var userId = 'a177d1b9-4b06-4f03-aff1-502ce915c3c0'; // was 36db5451-2ddc-4e3c-99de-37bd5a8810f8';
 var hostName = 'developer.api.autodesk.com';
 var baseUrl = 'https://' + hostName;
-var workItemsUrl =  baseUrl + '/autocad.io/us-east/v2/WorkItems';
+var workItemsUrl =  baseUrl + '/autocad.io/v1/WorkItems';
 var authUrl = baseUrl + '/authentication/v1/authenticate';
 var max_req_size = 30000;
 var siteUrl = undefined;
@@ -210,7 +210,7 @@ function createWorkItem(auth, reqId, args, pixUrl) {
   console.log('Initializing work item data');
 
   var params = {
-    '@odata.context': 'https://developer.api.autodesk.com/autocad.io/us-east/v2/$metadata#WorkItems/$entity',
+    'odata.metadata': 'https://developer.api.autodesk.com/autocad.io/v1/$metadata#WorkItems/@Element',
     Arguments: {
       InputArguments: [
         {
