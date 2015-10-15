@@ -20,7 +20,6 @@ var authUrl = baseUrl + '/authentication/v1/authenticate';
 var max_req_size = 30000;
 var siteUrl = undefined;
 
-
 exports.submitData = function (req, res) {
 
   var reqId = randomValueBase64(6);
@@ -211,7 +210,7 @@ function createWorkItem(auth, reqId, args, pixUrl) {
   console.log('Initializing work item data');
 
   var params = {
-    'odata.metadata': 'https://developer.api.autodesk.com/autocad.io/v1/$metadata#WorkItems/@Element',
+    '@odata.context': 'https://developer.api.autodesk.com/autocad.io/us-east/v2/$metadata#WorkItems/$entity',
     Arguments: {
       InputArguments: [
         {
