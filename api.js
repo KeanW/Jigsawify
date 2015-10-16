@@ -11,7 +11,7 @@ fs.mkdir('uploads', function() {});
 fs.mkdir('downloads', function() {});
 fs.mkdir('items', function() {});
 
-var activityName = 'JigsawActivity';
+var activityName = 'Adsk_JigsawActivity';
 var hostName = 'developer.api.autodesk.com';
 var baseUrl = 'https://' + hostName;
 var workItemsUrl =  baseUrl + '/autocad.io/us-east/v2/WorkItems';
