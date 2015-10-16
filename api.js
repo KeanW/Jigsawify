@@ -267,13 +267,13 @@ function createWorkItem(auth, reqId, args, pixUrl) {
     try {
       var workItem = JSON.parse(body);
       
-      if (!workItem.Id || !workItem.UserId) {
+      if (!workItem.Id) {
         console.log('Problem with request: ' + body);
         storeItemStatus(reqId, 'failed');
         return;
       }
       
-      console.log('Created work item (Id ' + workItem.Id + ' for user ' + workItem.UserId + ')');
+      console.log('Created work item (Id ' + workItem.Id + ')');
   
       // We're going to request the status for this WorkItem in a loop
       // We'll perform up to 10 checks, 2 seconds between each
