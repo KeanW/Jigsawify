@@ -239,12 +239,10 @@ function createWorkItem(auth, reqId, args, pixUrl) {
         }
       ]
     },
-    UserId: '',
     Id: '',
     Version: 1,
     ActivityId: {
-      Id: activityName,
-      UserId: userId
+      Id: activityName
     }
   };
 
