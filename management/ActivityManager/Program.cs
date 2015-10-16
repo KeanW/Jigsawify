@@ -12,8 +12,8 @@ namespace Client
 {
   class Program
   {
-    static readonly string PackageName = "JigsawPackage";
-    static readonly string ActivityName = "JigsawActivity";
+    static readonly string PackageName = "Adsk_JigsawPackage";
+    static readonly string ActivityName = "Adsk_JigsawActivity";
 
     static Container container;
     static void Main(string[] args)
