@@ -5,4 +5,14 @@ typings
 uploads
 downloads
 items
-
+management/bin
+management/packages
+management/*.suo
+management/ActivityManager/*.suo
+management/ActivityManager/*.user
+management/ActivityManager/bin
+management/ActivityManager/obj
+management/ActivityManager/Credentials.cs
+management/ActivityManager/packages
+management/CrxApp/obj
+management/CrxApp/*.user
