@@ -12,7 +12,6 @@ fs.mkdir('downloads', function() {});
 fs.mkdir('items', function() {});
 
 var activityName = 'JigsawActivity';
-var userId = 'a177d1b9-4b06-4f03-aff1-502ce915c3c0'; // was 36db5451-2ddc-4e3c-99de-37bd5a8810f8';
 var hostName = 'developer.api.autodesk.com';
 var baseUrl = 'https://' + hostName;
 var workItemsUrl =  baseUrl + '/autocad.io/us-east/v2/WorkItems';
@@ -240,9 +239,7 @@ function createWorkItem(auth, reqId, args, pixUrl) {
       ]
     },
     Id: '',
-    ActivityId: {
-      Id: activityName
-    }
+    ActivityId: activityName
   };
 
   var postData = JSON.stringify(params);
