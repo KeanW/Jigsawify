@@ -311,7 +311,7 @@ function checkWorkItem(auth, workItem, success, failure) {
   var check = function() {
     setTimeout(
       function() {
-        var url = workItemsUrl + "(UserId='" + workItem.UserId + "',Id='" + workItem.Id + "')";
+        var url = workItemsUrl + "(Id='" + workItem.Id + "')";
         
         request.get({
           url: url,
