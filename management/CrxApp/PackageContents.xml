@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ApplicationPackage
+    SchemaVersion="1.0"
+    Version="1.0"
+    ProductCode=""
+    HelpFile=""
+    Name="JigsawPackage"
+    Description="Jigsaw Creation Package"
+    Author="Kean Walmsley" >
+    <CompanyDetails
+      Name="Autodesk, Inc"
+      Phone="415.555.5555"
+      Url="www.autodesk.com"
+      Email="kean.walmsley@autodesk.com" />
+    <Components>
+      <RuntimeRequirements 
+        OS="Win64" 
+        Platform="AutoCAD" />
+      <ComponentEntry
+        AppName="JigsawPackage"
+        ModuleName="./Contents/Jigsaw.dll"
+        AppDescription="Jigsaw creation app"
+        LoadOnCommandInvocation="True"
+        LoadOnAutoCADStartup="False">
+        <Commands GroupName="Commands">
+          <Command Global="JIGG" Local="JIGG" />
+          <Command Global="JIGIO" Local="JIGIO" />
+          <Command Global="WIGL" Local="WIGL" />
+          <Command Global="JIGL" Local="JIGL" />
+          <Command Global="JIG" Local="JIG" />
+        </Commands>
+        <AssemblyMappings>
+          <AssemblyMapping
+            Name="JigsawPackage.Newtonsoft.Json"
+            Path="./Contents/Newtonsoft.Json.dll" />
+        </AssemblyMappings>
+      </ComponentEntry>
+      <ComponentEntry
+        AppName="JigsawPackage.Newtonsoft.Json"
+        AppType="Dependency"
+        ModuleName="./Contents/Newtonsoft.Json.dll"
+        AppDescription="JSON processing library"
+        LoadOnAutoCADStartup="False" />
+    </Components>
+</ApplicationPackage>
