@@ -240,7 +240,6 @@ function createWorkItem(auth, reqId, args, pixUrl) {
       ]
     },
     Id: '',
-    Version: 1,
     ActivityId: {
       Id: activityName
     }
