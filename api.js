@@ -328,6 +328,7 @@ function checkWorkItem(auth, workItem, success, failure) {
   
             switch (workItem2.Status) {
               case 'InProgress':
+              case 'Pending':
                 if (checked < 10) {
                   checked++;
                   check();
