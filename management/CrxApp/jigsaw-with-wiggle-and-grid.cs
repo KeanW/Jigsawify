@@ -37,7 +37,7 @@ namespace JigsawGenerator
   {
     const int puzCol = 8; // Dark grey
     const int engCol = 7; // White (black)
-    const int altCol = 3; // Green
+    const int altCol = 2; // Yellow
 
     // The WIGL command asks the user to enter this value (which
     // influences the extent of the "wiggle"). For the JIG, JIGG

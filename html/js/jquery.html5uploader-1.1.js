@@ -113,10 +113,7 @@
         function startProcess(fileOrUrl) {
             var callback = function () {
                 var canvas = scaleAndCropImage(this);
-                var blob = convertCanvasToBlob(canvas);
-
-                // Upload to server.
-                realUploadImage(blob);
+                convertCanvasToBlob(canvas, function(blob) { realUploadImage(blob); });
             };
 
             var success = false;
@@ -500,18 +497,18 @@
          * @param canvas Canvas element
          * @return Blob object ( https://developer.mozilla.org/en-US/docs/DOM/Blob )
          */
-        function convertCanvasToBlob(canvas) {
+        function convertCanvasToBlob(canvas, callback) {
             if (canvas.mozGetAsFile) {
                 // Mozilla implementation (File extends Blob).
-                return canvas.mozGetAsFile(null, 'image/jpeg', '0.9');
+                callback(canvas.mozGetAsFile(null, 'image/jpeg', '0.9'));
             } else if (canvas.toBlob) {
                 // HTML5 implementation.
                 // https://developer.mozilla.org/en/DOM/HTMLCanvasElement
-                return canvas.toBlob(null, 'image/jpeg', '0.9');
+                canvas.toBlob(callback, 'image/jpeg', '0.9');
             } else {
                 // WebKit implementation.
                 // http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
-                return createBlobFromDataUri(canvas.toDataURL('image/jpeg', '0.9'));
+                callback(createBlobFromDataUri(canvas.toDataURL('image/jpeg', '0.9')));
             }
         }
 
