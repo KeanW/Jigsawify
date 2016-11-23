@@ -61,7 +61,8 @@ function authorizeAndCall(success) {
   var params = {
     client_id: process.env.CONSUMER_KEY,
     client_secret: process.env.CONSUMER_SECRET,
-    grant_type: 'client_credentials'
+    grant_type: 'client_credentials',
+    scope: 'code:all'
   }
 
   request.post(authUrl,
