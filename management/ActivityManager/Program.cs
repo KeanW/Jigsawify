@@ -137,6 +137,9 @@ namespace Client
         values.Add(
           new KeyValuePair<string, string>("grant_type", "client_credentials")
         );
+        values.Add(
+          new KeyValuePair<string, string>("scope", "code:all")
+        );
         var requestContent = new FormUrlEncodedContent(values);
         var response =
           client.PostAsync(
