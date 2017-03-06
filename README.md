@@ -1,5 +1,5 @@
 # Jigsawify
-_Creates one-of-a-kind jigsaw puzzles using Autodesk's Forge platform_
+_Creates one-of-a-kind jigsaw puzzles using Autodesk's Forge platform._
 
 ## Origins
 This project originated from some work done to explore the use of laser cutters to create custom jigsaw puzzles. It became clear that some custom code - run inside AutoCAD - would help create a circular puzzle that was needed for a specific project. This code ended up being generalised and used an example of how AutoCAD I/O - now part of the Design Automation API in Autodesk's Forge platform - could run this code and make it available to web-sites and other web-services.
