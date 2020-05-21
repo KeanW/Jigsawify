@@ -384,9 +384,9 @@ async function downloadAndExtract(remoteZip, workItemId) {
   var zip = new AdmZip(localZip);
   var entries = zip.getEntries();
   var success =
-    unzipEntry(zip, "jigsaw.png", localRoot, entries) &&
-    unzipEntry(zip, "jigsaw.dwg", localRoot, entries) &&
-    unzipEntry(zip, "jigsaw.dxf", localRoot, entries);
+    (await unzipEntry(zip, "jigsaw.png", localRoot, entries)) &&
+    (await unzipEntry(zip, "jigsaw.dwg", localRoot, entries)) &&
+    (await unzipEntry(zip, "jigsaw.dxf", localRoot, entries));
   var result = success ? localRoot : "failed";
   return { result: result };
 }
@@ -412,7 +412,7 @@ async function downloadAndDisplay(report, workItemId) {
  * @param {Local Zip Path} path
  * @param {A collection of entries} entries
  */
-function unzipEntry(zip, file, path, entries) {
+async function unzipEntry(zip, file, path, entries) {
   if (
     entries.filter(function (val) {
       return val.entryName === file;
@@ -422,5 +422,6 @@ function unzipEntry(zip, file, path, entries) {
     console.log("Extracted " + path + "/" + file);
     return true;
   }
+  console.log("unzipping failed", file);
   return false;
 }

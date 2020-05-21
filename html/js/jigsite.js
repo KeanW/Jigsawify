@@ -253,11 +253,20 @@ function process() {
         //console.log('Request Id is ' + req);
 
         check(req.workItemId, function (res2) {
-          if (res2.result === "success") {
+          if (res2.result === "success" && res2.report !== "failed") {
             $("#jigimage").attr("src", res2.report + "/jigsaw.png");
             setLinkAndSizeTooltip("#dwg", res2.report + "/jigsaw.dwg");
             setLinkAndSizeTooltip("#dxf", res2.report + "/jigsaw.dxf");
             forward();
+          } else if (res2.report === "failed") {
+            if (spinner) spinner.stop();
+            Swal.fire({
+              icon: "info",
+              title: "This is not expected here...",
+              text: "Bug the author",
+              footer:
+                '<a href="https://github.com/KeanW/Jigsawify/issues/new">Would you like to raise a issue?</a>',
+            });
           } else {
             if (spinner) spinner.stop();
             var url = window.location + res2.report;
