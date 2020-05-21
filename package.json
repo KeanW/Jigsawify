@@ -11,7 +11,8 @@
 	],
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js",
+		"start": "NODE_ENV=production node server.js",
+		"dev": "node server.js",
 		"predeploy": "echo Deploying Jigsawify",
 		"postdepoly": "echo Jigsawify Deployed"
 	},
@@ -19,7 +20,10 @@
 		"adm-zip": "0.4.14",
 		"autodesk.forge.designautomation": "^3.0.3",
 		"canvas": "^2.6.1",
+		"cookie-parser": "^1.4.5",
 		"express": "4.x",
+		"express-session": "^1.17.1",
+		"express-sslify": "^1.2.0",
 		"forge-apis": "^0.7.3",
 		"fs-extra": "^9.0.0",
 		"handlebars": "^4.7.6",

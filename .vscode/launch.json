@@ -8,14 +8,14 @@
       "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome",
-      "url": "http://localhost:5000",
+      "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}"
     },
     {
       "type": "node",
       "request": "attach",
       "name": "Attach",
-      "port": 5000,
+      "port": 3000,
       "skipFiles": ["<node_internals>/**"]
     },
     {

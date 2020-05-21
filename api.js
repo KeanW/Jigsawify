@@ -58,12 +58,10 @@ try {
  * Get bearer access_token and authoriztion client
  */
 async function getOAuthTokenAsync() {
-  const client_id = process.env.FORGE_CLIENT_ID;
-  const client_secret = process.env.FORGE_CLIENT_SECRET;
   var autoRefresh = true;
   let oauth_client = new ForgeAPI.AuthClientTwoLegged(
-    client_id,
-    client_secret,
+    configFile.credentials.client_id,
+    configFile.credentials.client_secret,
     [
       "data:read",
       "data:write",
@@ -328,9 +326,9 @@ async function createWorkItem(req, reqId, args, pixUrl, res) {
     activityId:
       nickname +
       "." +
-      configFile.designAutomation.activityId +
+      configFile.forge.activityId +
       "+" +
-      configFile.designAutomation.activityAlias,
+      configFile.forge.activityAlias,
     arguments: {
       input: {
         url:

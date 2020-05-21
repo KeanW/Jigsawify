@@ -3,6 +3,9 @@ var multer = require("multer");
 var morgan = require("morgan");
 var path = require("path");
 var api = require("./api");
+var http = require("http"),
+  https = require("https");
+var config = require("./config");
 
 var app = express();
 
@@ -77,10 +80,21 @@ app.post("/api/upload", upload.single("imageFile"), (req, res, next) => {
   res.send(file);
 });
 
-/////////////////////////////////////////////////////////////////////////////////
-//
-//
-/////////////////////////////////////////////////////////////////////////////////
-app.listen(process.env.PORT || 5000);
+if (
+  config.credentials.client_id == null ||
+  config.credentials.client_secret == null
+) {
+  console.error(
+    "Missing FORGE_CLIENT_ID or FORGE_CLIENT_SECRET env. variables."
+  );
+  return;
+}
 
-console.log("Listening on port 5000...");
+/////////////////////////////////////////////////////////////////////////////////
+//
+//
+/////////////////////////////////////////////////////////////////////////////////
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
