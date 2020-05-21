@@ -114,10 +114,10 @@ namespace JigsawGenerator
     };
 
     // To access the colours in AutoCAD, we need ObjectARX...
-
+    //for _WIN64 uses different C++ decorator.
     [DllImport("accore.dll",
     CallingConvention = CallingConvention.Cdecl,
-    EntryPoint = "?acedGetCurrentColors@@YAHPEAUAcColorSettings@@@Z"
+    EntryPoint = "?acedGetCurrentColors@@YA_NPEAUAcColorSettings@@@Z"
     )]
     static extern bool acedGetCurrentColors(
       out AcColorSettings colorSettings
@@ -125,11 +125,13 @@ namespace JigsawGenerator
 
     [DllImport("accore.dll",
     CallingConvention = CallingConvention.Cdecl,
-    EntryPoint = "?acedSetCurrentColors@@YAHPEAUAcColorSettings@@@Z"
+    EntryPoint = "?acedSetCurrentColors@@YA_NPEAUAcColorSettings@@@Z"
     )]
     static extern bool acedSetCurrentColors(
       ref AcColorSettings colorSettings
     );
+
+
 
     public static AcColorSettings GetCurrentColors()
     {
