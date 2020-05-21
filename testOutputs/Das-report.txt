@@ -1,0 +1,130 @@
+[05/21/2020 10:09:31] Job information:
+"CommandLine":[
+  "$(engine.path)\\accoreconsole.exe /i $(args[input].path) /al $(appbundles[Adsk_JigsawPackage_v3].path) /s $(settings[script].path)"
+]
+"Settings":{
+  "script": {
+    "value": "_jigio params.json pixels.json outputs\n"
+  },
+  "dasreportfailedlimits": {
+    "value": "true",
+    "isEnvironmentVariable": true
+  }
+}
+"Id":"b227beae2e394e9ea297921ebfe6d29f"
+"ActivityId":"JigSawV3.Adsk_JigsawActivity_v3+prod"
+"Engine.Id":"Autodesk.AutoCAD!25"
+"Apps": [
+"App.Id":"JigSawV3.Adsk_JigsawPackage_v3!19"
+]
+"BoundArguments":{
+  "input": {
+    "localName": "$(HostDwg)",
+    "url": "http://download.autodesk.com/Masked:xJbxeBjW8pcah1nRnLYyPydz5i0="
+  },
+  "params": {
+    "localName": "params.json",
+    "url": "data:application/json, {\"Width\":12.0,\"Height\":12.0,\"Pieces\":100,\"XRes\":300,\"YRes\":300,\"Pixels\":null}"
+  },
+  "pixels": {
+    "localName": "pixels.json",
+    "url": "http://through-the-interface.typepad.com/Masked:35KL9rKFGuNFnIEZpain0pCT1Sc="
+  },
+  "result": {
+    "zip": true,
+    "localName": "outputs",
+    "url": "https://developer.api.autodesk.com/Masked:+VUQIx+Fh904d7qRlC3Xr/Axu20=",
+    "verb": "put"
+  },
+  "onProgress": {
+    "ondemand": true,
+    "url": "https://wlnr5sjl3a.execute-api.us-east-1.amazonaws.com/Masked:UK/Z3b5X3xUWxXiH6C9r9i9UlRU=",
+    "headers": {
+      "Content-Type": "application/json",
+      "x-das-authorize": "awssigv4(us-east-1)",
+      "x-ads-token-data": "{\"access_token\":{\"client_id\":\"GImnjBPJLKROK4uZqNws9xI5NhpUGDP1\"},\"scope\":\"code:all\",\"expires_in\":3594,\"client_id\":\"GImnjBPJLKROK4uZqNws9xI5NhpUGDP1\"}"
+    },
+    "verb": "put"
+  }
+}
+"Quotas":{
+  "limitDownloads": 100,
+  "limitUploads": 100,
+  "limitDownloadSizeMB": 100,
+  "limitUploadSizeMB": 100,
+  "limitProcessingTimeSec": 100,
+  "limitTotalUncompressedAppsSizeInMB": 500
+}
+[05/21/2020 10:09:31] Folder "T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\outputs" has been created.
+[05/21/2020 10:09:31] Starting work item b227beae2e394e9ea297921ebfe6d29f
+[05/21/2020 10:09:31] Start download phase.
+[05/21/2020 10:09:31] Start downloading file http://download.autodesk.com/us/support/files/autocad_2015_templates/acad.dwt.
+[05/21/2020 10:09:31] Start preparing AppPackage Adsk_JigsawPackage_v3.
+[05/21/2020 10:09:31] Download bits and install app to local cache.
+[05/21/2020 10:09:31] Embedded resource [ {"Width":12.0,"Height":12.0,"Pieces":100,"XRes":300,"YRes":300,"Pixels":null}] is saved as file: T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\params.json.
+[05/21/2020 10:09:31] Start downloading file http://through-the-interface.typepad.com/test/jigtest.json.
+[05/21/2020 10:09:31] Redirected, download from https://through-the-interface.typepad.com/test/jigtest.json instead.
+[05/21/2020 10:09:31] End downloading file http://download.autodesk.com/us/support/files/autocad_2015_templates/acad.dwt. 31419 bytes have been written to T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\acad.dwt.
+[05/21/2020 10:09:31] Time spent on downloading from redirected url is 0.2717444 seconds.
+[05/21/2020 10:09:31] End downloading file http://through-the-interface.typepad.com/test/jigtest.json. 27547 bytes have been written to T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\pixels.json.
+[05/21/2020 10:09:31] End download phase.
+[05/21/2020 10:09:32] Start preparing script and command line parameters.
+[05/21/2020 10:09:32] Command line: [ /i T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\acad.dwt /al T:\Aces\Applications\f1ca41387c922248679f5000991bb5e9.JigSawV3.Adsk_JigsawPackage_v3[19].package /s T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\setting_script.scr]
+[05/21/2020 10:09:32] End preparing script and command line parameters.
+[05/21/2020 10:09:32] Start script phase.
+[05/21/2020 10:09:32] ### Command line arguments: /isolate HKEY_CURRENT_USER\SOFTWARE\AppDataLow\Software\Autodesk\CoreUser\WorkItem_b227beae2e394e9ea297921ebfe6d29f "T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\userdata" /exe "T:\Aces\AcesRoot\23.1\coreEngine\Exe\accoreconsole.exe"  /i T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\acad.dwt /al T:\Aces\Applications\f1ca41387c922248679f5000991bb5e9.JigSawV3.Adsk_JigsawPackage_v3[19].package /s T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\setting_script.scr.
+[05/21/2020 10:09:32] Start AutoCAD Core Engine standard output dump.
+[05/21/2020 10:09:32] Redirect stdout (file: T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\tmp\accc31282).
+[05/21/2020 10:09:32] AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
+[05/21/2020 10:09:32] AutoCAD Core Engine Console - Copyright 2019 Autodesk, Inc.  All rights reserved. (Q.48.Z.11)
+[05/21/2020 10:09:32] Execution Path:
+[05/21/2020 10:09:32] T:\Aces\AcesRoot\23.1\coreEngine\Exe\accoreconsole.exe
+[05/21/2020 10:09:32] Current Directory: T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f
+[05/21/2020 10:09:32] Isolating to regkey=HKEY_CURRENT_USER\SOFTWARE\AppDataLow\Software\Autodesk\CoreUser\WorkItem_b227beae2e394e9ea297921ebfe6d29f, userDataFolder=T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\userdata.
+[05/21/2020 10:09:32] Version Number: Q.48.Z.11 (UNICODE)
+[05/21/2020 10:09:33] Regenerating model.
+[05/21/2020 10:09:33] Command:
+[05/21/2020 10:09:33] Command:
+[05/21/2020 10:09:33] Command:
+[05/21/2020 10:09:34] Command: _jigio
+[05/21/2020 10:09:34] Specify parameter file: params.json
+[05/21/2020 10:09:34] Specify pixel file: pixels.json
+[05/21/2020 10:09:34] Specify output folder: outputs
+[05/21/2020 10:09:34] Arguments:  {"Width":12.0,"Height":12.0,"Pieces":100,"XRes":300,"YRes":300,"Pixels":null}
+[05/21/2020 10:09:34] Puzzle will be 10 x 10 (100 in total)...
+[05/21/2020 10:09:35] _-overkill
+[05/21/2020 10:09:35] Select objects: _all 13773 found
+[05/21/2020 10:09:35] Select objects:
+[05/21/2020 10:09:35] Current settings: Tolerance=0.000001, Ignore=None, Optimize polylines=Yes, Combine partial overlap=Yes, Combine end-to-end=Yes
+[05/21/2020 10:09:35] Enter an option to change [Done/Ignore/tOlerance/optimize Plines/combine parTial overlap/combine Endtoend/Associativity] <done>: _t
+[05/21/2020 10:09:35] Combine co-linear objects that partially overlap [Yes/No] <Yes>:_y
+[05/21/2020 10:09:35] Current settings: Tolerance=0.000001, Ignore=None, Optimize polylines=Yes, Combine partial overlap=Yes, Combine end-to-end=Yes
+[05/21/2020 10:09:35] Enter an option to change [Done/Ignore/tOlerance/optimize Plines/combine parTial overlap/combine Endtoend/Associativity] <done>: _e
+[05/21/2020 10:09:35] Combine co-linear objects when aligned end to end [Yes/No] <Yes>:_y
+[05/21/2020 10:09:35] Current settings: Tolerance=0.000001, Ignore=None, Optimize polylines=Yes, Combine partial overlap=Yes, Combine end-to-end=Yes
+[05/21/2020 10:09:35] Enter an option to change [Done/Ignore/tOlerance/optimize Plines/combine parTial overlap/combine Endtoend/Associativity] <done>:
+[05/21/2020 10:09:36] 0 duplicate(s) deleted
+[05/21/2020 10:09:36] 4426 overlapping object(s) or segment(s) deleted_grid
+[05/21/2020 10:09:36] Specify grid spacing(X) or [ON/OFF/Snap/Major/aDaptive/Limits/Follow/Aspect] <0.5000>: _off _pngout Enter file name <T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\acad.png>: outputs\jigsaw.png Select objects or <all objects and viewports>:
+[05/21/2020 10:09:37] End AutoCAD Core Engine standard output dump.
+[05/21/2020 10:09:37] End script phase.
+[05/21/2020 10:09:37] Start upload phase.
+[05/21/2020 10:09:37] Zipping directory T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\outputs as T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\outputs.zip.
+[05/21/2020 10:09:37] Uploading T:\Aces\Jobs\b227beae2e394e9ea297921ebfe6d29f\outputs.zip to https://developer.api.autodesk.com/oss/v2/signedresources/b7b176ba-e173-4b62-aecf-78a8036d2e75?region=US.
+[05/21/2020 10:09:38] End upload phase.
+[05/21/2020 10:09:38] Job finished with result Succeeded
+[05/21/2020 10:09:38] Job Status:
+{
+  "status": "success",
+  "reportUrl": "https://dasprod-store.s3.amazonaws.com/workItem/JigSawV3/b227beae2e394e9ea297921ebfe6d29f/report.txt?AWSAccessKeyId=ASIATGVJZKM3C2CMM647&Expires=1590059471&x-amz-security-token=IQoJb3JpZ2luX2VjENL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCz9a0A41i0kGpdgwWuxMaPF%2FXsXG8rG4i150zWOSHM5QIgIFOhoWXthN6CgkcFdm4pwP%2FMxshLPCneS%2BLo%2BELPsYQq1QEIKxABGgwyMjA0NzMxNTIzMTAiDC8oPFo7EvxsA2NshSqyAfCvgsC4qgi%2BjDl2b5WLO021BeZBWOMkEsltW9d8myLkFu0bmGOmAycpJb1IVf%2FIBj%2BBO5gKrJnpSZBvgY%2BSruHOp062anDFan7jawhEPEIeOu7eBi3KEwVq%2BgI4iDqSCG6SITE6ZmzBxlsQQGPqzlIO97hnGyHRw3pnv%2Bfg6zsv3myQK1O%2B%2F6zgPiJuSuoUeOlUlzfSm2%2Fnwm2h%2B4VHhvAXBse3OrQZ2kA0KgXVXCf%2BNQ4wnZGZ9gU64AGqgq7NR5e3ijFcRzmTaKl5vZtux3dJT%2BgTWCqHkCGMHMLci7ScvJF%2F8M0ecmJdYsbFyv6cjKC8jPDnDkFLmzRBj2LtVcvUBK30txm71NwkKsaxmy5X3RtFGuwap05plLayaoy1slBUvwTfuCRZ%2BxMZtV24TFC86y4ZiolKs6RisBd2XpxM27A%2FNRLh03kNRgipXH3oqKmyhsFb4WdXrDTCFurSfk4ic8YTLWx27mDeEvqDf7N8LIT20jO%2F5BC%2BZPbDS00ec9KaauNbFO9ZsQfNhiaBgEeQueMwWWe7eUAJ8Q%3D%3D&Signature=0NznHU5YVl%2Ff5NU3Uq9UCw7hiqw%3D",
+  "stats": {
+    "timeQueued": "2020-05-21T10:09:31.4331683Z",
+    "timeDownloadStarted": "2020-05-21T10:09:31.6147304Z",
+    "timeInstructionsStarted": "2020-05-21T10:09:32.0392123Z",
+    "timeInstructionsEnded": "2020-05-21T10:09:37.6474592Z",
+    "timeUploadEnded": "2020-05-21T10:09:38.0810211Z",
+    "bytesDownloaded": 59044,
+    "bytesUploaded": 511160
+  },
+  "id": "b227beae2e394e9ea297921ebfe6d29f"
+}

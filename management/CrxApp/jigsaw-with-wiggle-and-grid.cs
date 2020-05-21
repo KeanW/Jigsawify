@@ -33,7 +33,39 @@ namespace JigsawGenerator
   public class XPixels : Dictionary<int, string>
   { }
 
-  public class Commands
+    public static class EditorExtension
+    {
+        public static void Zoom(this Editor ed, Extents3d ext)
+        {
+            if (ed == null)
+                throw new ArgumentNullException("ed");
+            using (ViewTableRecord view = ed.GetCurrentView())
+            {
+                Matrix3d worldToEye = Matrix3d.WorldToPlane(view.ViewDirection) *
+                    Matrix3d.Displacement(Point3d.Origin - view.Target) *
+                    Matrix3d.Rotation(view.ViewTwist, view.ViewDirection, view.Target);
+                ext.TransformBy(worldToEye);
+                view.Width = ext.MaxPoint.X - ext.MinPoint.X;
+                view.Height = ext.MaxPoint.Y - ext.MinPoint.Y;
+                view.CenterPoint = new Point2d(
+                    (ext.MaxPoint.X + ext.MinPoint.X) / 2.0,
+                    (ext.MaxPoint.Y + ext.MinPoint.Y) / 2.0);
+                ed.SetCurrentView(view);
+            }
+        }
+
+        public static void ZoomExtents(this Editor ed)
+        {
+            Database db = ed.Document.Database;
+            db.UpdateExt(false);
+            Extents3d ext = (short)Application.GetSystemVariable("cvport") == 1 ?
+                new Extents3d(db.Pextmin, db.Pextmax) :
+                new Extents3d(db.Extmin, db.Extmax);
+            ed.Zoom(ext);
+        }
+    }
+
+    public class Commands
   {
     const int puzCol = 8; // Dark grey
     const int engCol = 7; // White (black)
@@ -63,8 +95,12 @@ namespace JigsawGenerator
     {
       var cs = AutoCADColors.GetCurrentColors();
 
-      // Make both background colours white (the 3D
-      // background isn't currently being picked up)
+            // Make both background colours white (the 3D
+            // background isn't currently being picked up)
+
+            // Madhukar: 
+            //dwParallelBkColor is dependent Application, from AcCore not possible.
+            //In AutoCAD desktop, one can call acedColorSettingsChanged(false, true, true);  // apply the changes. //...
 
       cs.dwGfxModelBkColor = 16777215;
       cs.dwGfxLayoutBkColor = 16777215;
@@ -73,6 +109,7 @@ namespace JigsawGenerator
       // Set the modified colours
 
       AutoCADColors.SetCurrentColors(cs);
+
     }
 
     [CommandMethod("JIG")]
@@ -101,9 +138,8 @@ namespace JigsawGenerator
         "\nSelect intersecting entities. " +
         "Hit enter to use whole entity."
       );
-
-      var pso = new PromptSelectionOptions();
-      var psr = ed.GetSelection();
+            _ = new PromptSelectionOptions();
+            var psr = ed.GetSelection();
       if (
         psr.Status != PromptStatus.OK &&
         psr.Status != PromptStatus.Error // No selection
@@ -257,14 +293,16 @@ namespace JigsawGenerator
       var db = doc.Database;
       var ed = doc.Editor;
 
-      // Get overall dimensions of the puzzle
+            // Get overall dimensions of the puzzle
 
-      var pdo = new PromptDoubleOptions("\nEnter puzzle width");
-      pdo.AllowNegative = false;
-      pdo.AllowNone = false;
-      pdo.AllowZero = false;
+            var pdo = new PromptDoubleOptions("\nEnter puzzle width")
+            {
+                AllowNegative = false,
+                AllowNone = false,
+                AllowZero = false
+            };
 
-      var pdr = ed.GetDouble(pdo);
+            var pdr = ed.GetDouble(pdo);
       if (pdr.Status != PromptStatus.OK)
         return;
 
@@ -377,15 +415,16 @@ namespace JigsawGenerator
 
             ed.Command("_-overkill", "_all", "", "_t", "_y", "_e", "_y", "");
 
-            // Save the DWG and DXF to it...
-
             db.SaveAs(dwgOut, DwgVersion.Current);
             db.DxfOut(dxfOut, 16, DwgVersion.Current);
             
+            
             // ... and create a PNG in the same location
 
-            ed.Command("_grid", "_off");
-            ed.Command("_zoom", "_extents");
+             ed.Command("_grid", "_off","");
+            //Calling _zoom command with "_extents" is reporting error.
+            //ed.Command("_zoom", "_extents");
+             ed.ZoomExtents();
             ed.Command("_pngout", pngOut, "");
           }
         }
@@ -409,7 +448,7 @@ namespace JigsawGenerator
       var piecesX = Math.Floor(pieces / piecesY);
 
       ed.WriteMessage(
-        "\nPuzzle will be {0} x {1} ({2} in total).",
+        "\nPuzzle will be {0} x {1} ({2} in total)...\n",
         piecesX, piecesY, piecesX * piecesY
       );
 

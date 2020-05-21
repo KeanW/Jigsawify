@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>D:\Work\Forge\Jigsawify\management\bin\</OutputPath>
+    <RunWorkingDirectory>$(OutputPath)netcoreapp3.1\</RunWorkingDirectory>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutputPath>D:\Work\Forge\Jigsawify\management\bin\</OutputPath>
+    <RunWorkingDirectory>$(OutputPath)netcoreapp3.1\</RunWorkingDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autodesk.Forge" Version="1.7.0" />
+    <PackageReference Include="Autodesk.Forge.DesignAutomation" Version="3.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.user.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

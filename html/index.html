@@ -1,17 +1,24 @@
 ﻿<!DOCTYPE html>
-<html >
+<html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jigsawify</title>
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Lobster"
-          rel="stylesheet" type="text/css">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link
+      href="http://fonts.googleapis.com/css?family=Droid+Sans|Lobster"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
   </head>
   <body>
-    <h2 class="unselectable" id="title" title="Creates a DWG or DXF to drive a laser cutter">
+    <h2
+      class="unselectable"
+      id="title"
+      title="Creates a DWG or DXF to drive a laser cutter"
+    >
       Jigsawify
     </h2>
     <div>
@@ -21,35 +28,47 @@
     <div id="content" class="media-drop">
       <div class="container-fluid">
         <div class="row-fluid">
-          <div style="display:none" class="wrapper" id="droppedimage">
-            <img alt="Original Image" id="image">
+          <div style="display: none;" class="wrapper" id="droppedimage">
+            <img alt="Original Image" id="image" />
           </div>
-          <div style="display:none" class="wrapper2" id="engravedimage">
-            <img alt="Engraving Image" id="engimage">
+          <div style="display: none;" class="wrapper2" id="engravedimage">
+            <img alt="Engraving Image" id="engimage" />
           </div>
         </div>
       </div>
-      <div style="display:none" class="wrapper3" id="loading">
+      <div style="display: none;" class="wrapper3" id="loading"></div>
+      <div style="display: none;" class="wrapper4" id="jigsaw">
+        <img alt="Jigsaw" id="jigimage" />
       </div>
-      <div style="display:none" class="wrapper4" id="jigsaw">
-        <img alt="Jigsaw" id="jigimage">
-      </div>      
       <div id="dropbox" class="media-drop-placeholder">
         <span class="media-drop-placeholder-title">Drop image here</span>
-        <br/>
+        <br />
         <span class="media-drop-placeholder-or">or</span>
         <br />
         <div class="media-drop-placeholder-uploadbutton">
-          <input id="realUploadBtn" name="media-drop-placeholder-file"
-                 type="file" accept="image/*" tabindex="-1" />
+          <input
+            id="realUploadBtn"
+            name="avatar"
+            type="file"
+            accept="image/*"
+            tabindex="-1"
+          />
           <button id="uploadBtn" type="button" class="btn" tabindex="-1">
             Browse&hellip;
           </button>
         </div>
       </div>
     </div>
-    <input class="slider" id="threshold" type="range" min="0" max="100"
-           value="70" step="5" onchange="slide(this.value)" />
+    <input
+      class="slider"
+      id="threshold"
+      type="range"
+      min="0"
+      max="100"
+      value="70"
+      step="5"
+      onchange="slide(this.value)"
+    />
     <div id="size" class="text">
       <input class="entry" id="width" type="number" class="num" />
       <span class="desc">&nbsp;x&nbsp;</span>
@@ -62,13 +81,17 @@
       <span class="desc">&nbsp;pieces</span>
     </div>
     <div id="nav">
-      <button id="back" type="button" class="btn" onclick="back();">Back</button>
-      <button id="next" type="button" class="btn" onclick="forward();">Next</button>
+      <button id="back" type="button" class="btn" onclick="back();">
+        Back
+      </button>
+      <button id="next" type="button" class="btn" onclick="forward();">
+        Next
+      </button>
       <button id="dwg" type="button" class="btn">DWG</button>
       <button id="dxf" type="button" class="btn">DXF</button>
     </div>
-    <br/><br/><br/>    
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    
+    <br /><br /><br />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.html5uploader-1.1.js"></script>
     <script src="js/exif.js"></script>
@@ -77,5 +100,6 @@
     <script src="js/jigsite.js"></script>
     <script src="js/ga.js"></script>
     <script src="js/sa.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   </body>
 </html>
