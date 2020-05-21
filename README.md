@@ -41,7 +41,7 @@ nuget install packages.config -OutputDirectory ..\packages
 msbuild /t:Build /p:Configuration=Release;Platform=x64
 ```
 
-![crxapp-restore-build](https://github.com/MadhukarMoogala/Jigsawify/tree/master/gifs/crxapp-restore-build.gif)
+![crxapp-restore-build](https://github.com/MadhukarMoogala/Jigsawify/blob/master/gifs/client-build.gif)
 
 #### Step2: Building design automation .NET core client application
 
@@ -52,7 +52,7 @@ cd management\clientv3
 dotnet build
 ```
 
-![client-build](https://github.com/MadhukarMoogala/Jigsawify/tree/master/gifs/client-build.gif)
+![client-build](https://github.com/MadhukarMoogala/Jigsawify/blob/master/gifs/client-build.gif)
 
 #### Step3: Running client application
 
@@ -61,7 +61,7 @@ cd management\clientv3
 dotnet run
 ```
 
-![](https://github.com/MadhukarMoogala/Jigsawify/tree/master/gifs/dotnet-run.gif)
+![dotnet-run](https://github.com/MadhukarMoogala/Jigsawify/blob/master/gifs/dotnet-run.gif)
 
 #### Step4: Running Jigsaw site application
 
